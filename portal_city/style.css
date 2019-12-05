@@ -1,0 +1,85 @@
+body{
+    background-image: url('./img/bg-06.jpg');
+    background-size: auto;
+    height: 100vh;
+}
+img{
+    width: fit-content;
+}
+.bg-white-75{
+    background-color: rgba(255, 255, 255, 0.75);
+}
+.border-rounded{
+    border-radius: 3em;
+}
+.back{
+    background-image: url(./img/back_arrow.png);
+    background-color: transparent;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 6em;
+    height: 5em;
+    position: absolute;
+    border: none;
+    top: 2em;
+    left: 2em;
+}
+.btn-city{
+    background-image: url(./img/btn.png);
+    background-color: transparent;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-width: 8em;
+    min-height: 9em;
+    border: none;
+    transition: .25s
+}
+.btn2-city{
+    background-image: url(./img/btn2.png);
+    background-color: transparent;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-width: 8em;
+    min-height: 9em;
+    border: none;
+    transition: .25s
+}
+.btn-city:focus, .btn2-city:focus,.back:focus{
+    outline: none;
+    transform: scale(0.75);
+}
+.btn-city:hover, .btn2-city:hover{
+    transform: scale(1.05);
+}
+.btn-city img{
+    max-width: 75%;
+}
+.btn2-city img{
+    max-width: 50%;
+}
+.icon-container img{
+    max-width: 20em;
+}
+
+
+.locked{
+    opacity: 0.75;
+    pointer-events: none;
+    position: relative;
+}
+.locked::after{
+    position: absolute;
+    background-image: url(./img/locked.png);
+    background-color: transparent;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    content: ' ';
+    width: 4em;
+    height: 4em;
+    top: -16px;
+    right: 26%;
+}
