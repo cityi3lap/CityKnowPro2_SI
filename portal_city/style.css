@@ -63,7 +63,7 @@ h4{
     /*min-width: 8em;
     min-height: 9em; */
     display:block;
-    margin:auto;
+    margin:auto !important;
     height: 7rem;
     width: 7rem;   
     border: none;
