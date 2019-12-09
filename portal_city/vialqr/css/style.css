@@ -1,0 +1,145 @@
+body{
+    background-image: url('../img/backgroundPage.jpg');
+    width: 100%;
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    margin: 8px 0;
+    padding: 0;
+}
+
+
+.div-content{
+    border:2px solid white;
+    border-radius: 10px;
+    width: 95%;
+    height: 95%;
+  position: absolute;
+  box-sizing: content-box;
+  text-align: center;
+
+}
+
+.text-title{
+    user-select:none;
+color:white;
+font-size: 40px;
+margin-top:10%;
+font-family: 'HelveticaNeue-BoldCond';
+text-shadow:1px 1px 2px black;
+
+}
+
+.contnt-image{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    user-select: none;
+}
+
+.contnt-image--options {
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+}
+
+.div-button{
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    padding:5px;
+    box-shadow: -1px 0px 11px 1px rgba(0,0,0,0.75); 
+}
+
+.div-button:hover{
+    background-color: rgb(241, 226, 4);
+}
+.div-button p{
+    font-family: 'HelveticaNeue-BoldCond';
+    color:#4962DB;
+    font-size: 50px;
+    padding: 0;
+    margin: 22%;
+}
+
+
+.opt-button{
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5%;
+    width: 300px;
+    height: 100px;
+    box-shadow: -1px 0px 11px 1px rgba(0,0,0,0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom:2%;
+}
+.opt-button p{
+    font-family: 'HelveticaNeue-BoldCond';
+    color:#4962DB;
+    font-size: 50px;
+    padding: 0;
+}
+
+.opt-button:hover{
+    background-color: rgb(241, 226, 4);
+}
+
+
+/* MEDIA QUERY PARA PANTALLAS MOVILES*/
+
+@media screen and (max-width:500px){
+    body{
+        background-image: url('../img/backgroundMovil.jpg');
+    }
+    .text-title{
+        font-size: 25px;
+        margin-top:90%;
+    }
+
+    .div-button{
+        width: 100px;
+        height: 100px;
+    }
+    .contnt-image{
+        width: 100%;
+    }
+}
+
+@media screen and (min-width:500px) and (max-width:800px){
+    body{
+        background-image: url('../img/backgroundMovil.jpg');
+    }
+    .text-title{
+        font-size: 25px;
+        margin-top:60%;
+    }
+    .div-button{
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media screen and (max-width:800px){
+
+    .opt-button p {
+        font-size: 30px;
+    }
+
+    .opt-button{
+        width: 250px;
+        height: 100px;
+        margin-bottom:6%;
+
+    }
+}
+@font-face {
+    font-family: 'HelveticaNeue-BoldCond';
+    src: url('../font/HelveticaNeue-BoldCond.otf');
+}

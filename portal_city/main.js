@@ -12,7 +12,7 @@ window.addEventListener("load", function() {
               label: "Sístema de Información",
               action: {
                 type: "navigate",
-                to: 0
+                to: './si'
               }
             },
             {
