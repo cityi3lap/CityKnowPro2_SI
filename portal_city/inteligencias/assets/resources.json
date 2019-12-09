@@ -33,31 +33,31 @@
         {
             "id": "0-1",
             "type": "link",
-            "src": "https://demosviaalavida.com/actividades/noevaluable.html?id=0",
+            "src": "../../IM_Questions/Login.html?grade=firstgrade",
             "marker": "./assets/resources/marker/pattern-1.patt"
         },
         {
             "id": "2-3",
             "type": "link",
-            "src": "https://demosviaalavida.com/actividades/noevaluable.html?id=1",
+            "src": "../../IM_Questions/Login.html?grade=secondgrade",
             "marker": "./assets/resources/marker/pattern-2.patt"
         },
         {
             "id": "4-5",
             "type": "link",
-            "src": "https://demosviaalavida.com/actividades/noevaluable.html?id=2",
+            "src": "../../IM_Questions/Login.html?grade=fourthgrade",
             "marker": "./assets/resources/marker/pattern-3.patt"
         },
         {
             "id": "6-7",
             "type": "link",
-            "src": "https://demosviaalavida.com/actividades/noevaluable.html?id=3",
+            "src": "../../IM_Questions/Login.html?grade=sixthgrade",
             "marker": "./assets/resources/marker/pattern-4.patt"
         },
         {
             "id": "8-9",
             "type": "link",
-            "src": "https://demosviaalavida.com/actividades/noevaluable.html?id=4",
+            "src": "../../IM_Questions/Login.html?grade=eighthgrade",
             "marker": "./assets/resources/marker/pattern-5.patt"
         }
     ]

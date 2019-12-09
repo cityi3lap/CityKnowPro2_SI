@@ -1,0 +1,72 @@
+{
+    "playerid": "JUAN",
+    "grade": 0,
+    "disability": {
+        "id": 0,
+        "type": ""
+    },
+    "minigames": [],
+    "intelligenceGames": [
+        {
+            "gameid": "",
+            "gamegrade": 0,
+            "competence": "",
+            "level": 0,
+            "location": 0,
+            "server": {
+                "status": 0,
+                "lastdate": "",
+                "platform": ""
+            },
+            "progress": {
+                "round": 0,
+                "errors": 0,
+                "repeatedGuide": 0,
+                "total": 0,
+                "finished": false
+            },
+            "next": "",
+            "isUnlock": false,
+            "intelligences": [
+                {
+                    "name": 0,
+                    "intelligence_indicator": 0,
+                    "indicator": 0.0,
+                    "round": 1
+                },
+                {
+                    "name": 0,
+                    "intelligence_indicator": 0,
+                    "indicator": 0.0,
+                    "round": 2
+                },
+                {
+                    "name": 0,
+                    "intelligence_indicator": 0,
+                    "indicator": 0.0,
+                    "round": 0
+                }
+            ],
+            "styles": [
+                {
+                    "name": 0,
+                    "style_characteristic": 0,
+                    "round": 1
+                },
+                {
+                    "name": 0,
+                    "style_characteristic": 0,
+                    "round": 2
+                }
+            ]
+        }
+    ],
+    "locationspritedata": [],
+    "avatar": {
+        "name": "",
+        "type": 0,
+        "gender": 0,
+        "skin": 0,
+        "proffesion": 0
+    }
+}

@@ -1,16 +1,43 @@
 body{
     background-image: url('./img/bg-06.jpg');
     background-size: auto;
-    height: 100vh;
+    /* height: 100vh; */
+    margin:auto auto;   
 }
 img{
     width: fit-content;
+    padding-bottom: 10px;
+}
+
+h4{
+    text-align:center;
+}
+.logocity{
+    height:15rem;
+    width:18rem;
 }
 .bg-white-75{
     background-color: rgba(255, 255, 255, 0.75);
 }
+
+.contenido{
+    max-width: 95% !important;
+    max-height: 95% !important; 
+    padding-top: 1rem;  
+}
+.cityknow{
+    margin-top: 5px !important;
+    margin-bottom: 2px !important;
+}
+
+.botones{
+    margin-top: 5px;
+}
+
 .border-rounded{
     border-radius: 3em;
+    padding-top: 1rem !important; 
+    max-height:  90% !important;
 }
 .back{
     background-image: url(./img/back_arrow.png);
@@ -18,8 +45,10 @@ img{
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    width: 6em;
-    height: 5em;
+    /*width: 7em;
+    height: 7em;*/
+    width:5rem;
+    height:5rem;
     position: absolute;
     border: none;
     top: 2em;
@@ -31,8 +60,12 @@ img{
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    min-width: 8em;
-    min-height: 9em;
+    /*min-width: 8em;
+    min-height: 9em; */
+    display:block;
+    margin:auto;
+    height: 7rem;
+    width: 7rem;   
     border: none;
     transition: .25s
 }
@@ -42,8 +75,14 @@ img{
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    min-width: 8em;
+    display:block;
+    margin:auto !important;
+   /* min-width: 8em;
     min-height: 9em;
+    max-width: 16em;
+    max-height: 18em;  */
+    height: 6rem;
+    width: 6rem;  
     border: none;
     transition: .25s
 }
@@ -63,6 +102,7 @@ img{
 .icon-container img{
     max-width: 20em;
 }
+
 
 
 .locked{
