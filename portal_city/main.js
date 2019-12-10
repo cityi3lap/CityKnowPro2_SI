@@ -30,7 +30,7 @@ window.addEventListener("load", function() {
               label: "Inteligencias Multiples",
               action: {
                 type: "window",
-                to: 1
+                to: 2
               }
             },
             {
@@ -39,7 +39,7 @@ window.addEventListener("load", function() {
               label: "Tipologías de Uso",
               action: {
                 type: "window",
-                to: 2
+                to: 1
               }
             }
           ]
@@ -50,10 +50,10 @@ window.addEventListener("load", function() {
             {
               class: "btn-city",
               img: "./img/im.png",
-              label: "Inteligencias Multiples",
+              label: "Talentos Excepcionales",
               action: {
                 type: "navigate",
-                to: 0
+                to: "https://storage.googleapis.com/cityknowpro/tipologia_uso/CARTILLA%20TALENTOS%20epub.epub"
               }
             },
             {
@@ -62,7 +62,7 @@ window.addEventListener("load", function() {
               label: "Discapacidad Auditiva",
               action: {
                 type: "navigate",
-                to: 0
+                to: "https://storage.googleapis.com/cityknowpro/tipologia_uso/CARTILLA%20AUDITIVA%20epub.epub"
               }
             },
             {
@@ -71,7 +71,7 @@ window.addEventListener("load", function() {
               label: "Discapacidad Visual",
               action: {
                 type: "navigate",
-                to: 0
+                to: "https://storage.googleapis.com/cityknowpro/tipologia_uso/CARTILLA%20VISUALepub.epub"
               }
             },
             {
@@ -80,7 +80,7 @@ window.addEventListener("load", function() {
               label: "Discapacidad Motriz",
               action: {
                 type: "navigate",
-                to: 0
+                to: "https://storage.googleapis.com/cityknowpro/tipologia_uso/CARTILLA%20motriz%20epub.epub"
               }
             },
             {
@@ -89,7 +89,7 @@ window.addEventListener("load", function() {
               label: "Discapacidad Cognitiva",
               action: {
                 type: "navigate",
-                to: 0
+                to: "https://storage.googleapis.com/cityknowpro/tipologia_uso/CARTILLA%20COGNITIVA%20epub.epub"
               }
             }
           ]
