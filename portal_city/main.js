@@ -53,7 +53,7 @@ window.addEventListener("load", function() {
               label: "Talentos Excepcionales",
               action: {
                 type: "navigate",
-                to: "https://storage.googleapis.com/cityknowpro/tipologia_uso/CARTILLA%20TALENTOS%20epub.epub"
+                to: "https://indd.adobe.com/view/f4164f4e-834e-48fa-86f8-ee6cb296a4c5"
               }
             },
             {
@@ -62,7 +62,7 @@ window.addEventListener("load", function() {
               label: "Discapacidad Auditiva",
               action: {
                 type: "navigate",
-                to: "https://storage.googleapis.com/cityknowpro/tipologia_uso/CARTILLA%20AUDITIVA%20epub.epub"
+                to: "https://indd.adobe.com/view/440988e0-0533-482e-bf0d-a5f8c0baaf7a"
               }
             },
             {
@@ -71,7 +71,7 @@ window.addEventListener("load", function() {
               label: "Discapacidad Visual",
               action: {
                 type: "navigate",
-                to: "https://storage.googleapis.com/cityknowpro/tipologia_uso/CARTILLA%20VISUALepub.epub"
+                to: "https://indd.adobe.com/view/18fcdaa5-08e9-4515-b80e-c57dff858d4a"
               }
             },
             {
@@ -80,7 +80,7 @@ window.addEventListener("load", function() {
               label: "Discapacidad Motriz",
               action: {
                 type: "navigate",
-                to: "https://storage.googleapis.com/cityknowpro/tipologia_uso/CARTILLA%20motriz%20epub.epub"
+                to: "https://indd.adobe.com/view/98d4038d-2e84-4871-841c-1fd71ef7a991"
               }
             },
             {
@@ -89,7 +89,7 @@ window.addEventListener("load", function() {
               label: "Discapacidad Cognitiva",
               action: {
                 type: "navigate",
-                to: "https://storage.googleapis.com/cityknowpro/tipologia_uso/CARTILLA%20COGNITIVA%20epub.epub"
+                to: "https://indd.adobe.com/view/6e07cdc3-cbd2-4b53-8589-57ddf3a0f92a"
               }
             }
           ]
@@ -103,7 +103,7 @@ window.addEventListener("load", function() {
               label: "Inteligencias Multiples",
               action: {
                 type: "navigate",
-                to: 0
+                to: "./imgame"
               }
             },
             {
@@ -112,7 +112,7 @@ window.addEventListener("load", function() {
                 label: "Lector de Código QR",
                 action: {
                   type: "navigate",
-                  to: 0
+                  to: "./inteligencias"
                 }
               }
           ]
