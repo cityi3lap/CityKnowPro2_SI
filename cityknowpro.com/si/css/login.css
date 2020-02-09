@@ -1,0 +1,95 @@
+:root {
+    --white: #fff;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --font-family-sans-serif: "Nunito", sans-serif;
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+
+    --primayColor: #00b2bf;
+    --secondColor: #00a3af;
+    --lightColor: #ecf8f9;
+    --darkColor: #005c63;
+}
+
+.card {
+    background-color: var(--lightColor) !important;
+}
+
+body {
+    background-color: var(--secondColor);
+}
+
+.content-page {
+    height: 100vh;
+    width: 100vw;
+    padding: 0px;
+}
+
+.content-cardLogin {
+    height: 100vh;
+}
+
+/* Styles Input-Group */
+
+.input-group-text {
+    border: none !important;
+    background-color: var(--white);
+    color: var(--primayColor);
+}
+
+.form-control {
+    border: none !important;
+}
+
+/* button Styles */
+
+.btn-link {
+    margin: 0.1em;
+}
+
+.btn-primary {
+    background-color: var(--primayColor);
+    width: 20rem;
+    border-radius: 4em;
+}
+
+/* Check  */
+
+.custom-control-input {
+    border: none !important;
+}
+
+.custom-control-label {
+    color: var(--secondColor);
+}
+
+.btn-link {
+    color: var(--secondColor);
+}
+
+/* ------------------------------------------ Forgot password */
+
+.container {
+    height: 100vh;
+    background-color: var(--secondColor);
+}
+
+.container .card {
+    margin: 10%;
+    background-color: var(--lightColor);
+}
+
+.container .card h4 {
+    margin-top: .5em;
+    text-align: center;
+}
+
+/* ------------------------------------------ Forgot password  --------------------- Exit*/
