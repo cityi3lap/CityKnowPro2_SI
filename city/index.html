@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Portal City</title>
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/main.js"></script>
+    <link rel="stylesheet" href="./css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body >
+    <div id="app" class="d-flex flex-column justify-content-center">
+      <div class="container my-auto contenido mt-auto">
+        <div class="row">
+          <div
+            class="card col-12 col-md-10 mx-auto bg-white-75 p-sm-5 border-rounded"
+          >
+            <button class="back" @click="goHome" v-if="windowStatus!==0"></button>
+            <div class="text-center icon-container mt-3 mb-5 cityknow">
+              <img :src="windowStatus!=3 && windowStatus!=4?'./img/logo.png':window[windowStatus].img" :class="windowStatus!=3 && windowStatus!=4?'logocity':'my-2'" alt="logo" srcset="" />
+            </div>
+            <h3 v-if="window[windowStatus].info">{{window[windowStatus].info}}</h3>
+            <div class="row py-2 px-md-5 px-md-4 px-2 text-center mt-5 mb-2 justify-content-center align-items-start">
+              <div
+                class="d-flex flex-column col"
+                v-for="button in window[windowStatus].buttons"
+              >
+                <button
+                  :class="button.class+' p-2 m-3'"
+                  @click="btnOnAction(button.action)"
+                >
+                  <img :src="button.img" :alt="button.label" srcset="" />
+                </button>
+                <label class="h5">{{button.label}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

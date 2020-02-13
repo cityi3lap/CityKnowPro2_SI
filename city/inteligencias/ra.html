@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>City Know Pro</title>
+    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+    <script src="https://raw.githack.com/jeromeetienne/AR.js/1.7.1/aframe/build/aframe-ar.js"></script>
+</head>
+<style>
+    .ehs-exit-btn {
+        user-select: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #ff4444;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 115px;
+        height: 50px;
+        z-index: 0;
+        margin: .5rem;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        border-radius: 10px;
+    }
+</style>
+
+<body style='margin : 0px; overflow: hidden; font-family: Monospace; background: rgba(204, 204, 204, .3);'>
+
+    <a-scene vr-mode-ui="enabled: false" embedded
+        arjs='patternRatio:0.9; debugUIEnabled: false; sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3; canvasWidth: 240; canvasHeight: 180'>
+        <a-entity id="cursor" cursor="fuse: true; fuseTimeout: 1000" position="0 0 -1" raycaster="objects: .clickable">
+        </a-entity>
+        <a-entity camera></a-entity>
+    </a-scene>
+    <div onclick="gotoHome()" class="ehs-exit-btn">
+        Cerrar
+    </div>
+
+    <script src="./js/main.js"></script>
+</body>
+
+</html>

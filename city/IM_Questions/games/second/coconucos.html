@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/coconucos.css">
+    <title>La serranía de los coconucos</title>
+</head>
+
+<body class="bg-info">
+
+    <body>
+        <div class="container">
+            <div class="header">
+                <div class="title">
+                    <div class="logo">
+                        <a onclick="back('../../SecondGrade.html')" href="#" style="width: 3rem;">
+                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 54 54"
+                                style="enable-background:new 0 0 54 54;" xml:space="preserve">
+                                <g>
+                                    <g>
+                                        <path style="fill:#1c8797;" d="M27,1L27,1c14.359,0,26,11.641,26,26v0c0,14.359-11.641,26-26,26h0C12.641,53,1,41.359,1,27v0
+                                            C1,12.641,12.641,1,27,1z" />
+                                        <path style="fill:#1c8797;" d="M27,54C12.112,54,0,41.888,0,27S12.112,0,27,0s27,12.112,27,27S41.888,54,27,54z M27,2
+                                            C13.215,2,2,13.215,2,27s11.215,25,25,25s25-11.215,25-25S40.785,2,27,2z" />
+                                    </g>
+                                    <path style="fill:#FFFFFF;" d="M31.706,40c-0.256,0-0.512-0.098-0.707-0.293L19.501,28.209c-0.667-0.667-0.667-1.751,0-2.418
+                                        l11.498-11.498c0.391-0.391,1.023-0.391,1.414,0s0.391,1.023,0,1.414L21.12,27l11.293,11.293c0.391,0.391,0.391,1.023,0,1.414
+                                        C32.218,39.902,31.962,40,31.706,40z" />
+                            </svg></a>
+                    </div>
+                    <h3><a class="text-white" onclick="back('../../SecondGrade.html')" href="#">La serranía de los Coconucos</a></h3>
+                </div>
+            </div>
+            <div class="content">
+                <div class="question">
+                    <h3 class="text-white">¿Lograste realizar tu pintura de la serranía de los coconucos?</h3>
+                </div>
+                <div>
+                    <select onchange="select()" class="form-control form-control-lg text-info" id="value">
+                        <option disabled selected value>Selecciona una respuesta</option>
+                        <option>Lo logré</option>
+                        <option>Aún no lo logré</option>
+                    </select>
+                </div>
+                <button id="btn" onclick="ingresar('../../FirstGrade.html', data.secondGrade[indexI].intelligences, data.secondGrade[indexI].styles)" type="button" class="btn btn-dark text-white w-50">Enviar</button>
+            </div>
+        </div>
+        <!-- <script src="js/modules/purace.js"></script> -->
+        <script src="../../js/data/data.js"></script>
+        <script src="../../js/sendData.js"></script>
+        <script src="../../js/modules/oneAnswer.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    </body>
+
+</html>

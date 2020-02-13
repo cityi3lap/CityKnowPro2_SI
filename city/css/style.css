@@ -1,0 +1,144 @@
+body{
+    background-image: url('../img/bg-06.jpg');
+    background-size: auto;
+    height: 100vh;
+    margin:auto auto;   
+}
+#app{
+    height: inherit;
+}
+img{
+    width: fit-content;
+    padding-bottom: 10px;
+}
+    
+h3{
+    text-align:center;
+    color: #204966;
+}
+.logocity{
+    height:15rem;
+    width:18rem;
+}
+.bg-white-75{
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+.contenido{
+    max-width: 95% !important;
+    max-height: 95% !important; 
+    padding-top: 1rem;  
+}
+.cityknow{
+    margin-top: 5px !important;
+    margin-bottom: 2px !important;
+}
+
+.botones{
+    margin-top: 5px;
+}
+
+.border-rounded{
+    border-radius: 3em;
+    padding-top: 1rem !important; 
+    max-height:  90% !important;
+}
+.back{
+    background-image: url(../img/back_arrow.png);
+    background-color: transparent;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    /*width: 7em;
+    height: 7em;*/
+    width:5rem;
+    height:5rem;
+    position: absolute;
+    border: none;
+    top: 2em;
+    left: 2em;
+}
+.btn-city{
+    background-image: url(../img/btn.png);
+    background-color: transparent;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    /*min-width: 8em;
+0    min-height: 9em; */
+    display:block;
+    margin:auto !important;
+    height: 8rem;
+    width: 8rem;   
+    border: none;
+    transition: .25s
+}
+.btn2-city{
+    background-image: url(../img/btn2.png);
+    background-color: transparent;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    display:block;
+    margin:0.25em auto !important;
+   /* min-width: 8em;
+    min-height: 9em;
+    max-width: 16em;
+    max-height: 18em;  */
+    height: 8rem;
+    width: 8rem;  
+    border: none;
+    transition: .25s
+}
+.btn-city:hover, .btn2-city:hover{
+    transform: scale(1.05);
+}
+.btn-city img{
+    max-width: 75%;
+}
+.btn2-city img{
+    max-width: 50%;
+}
+.locked{
+    opacity: 0.75;
+    pointer-events: none;
+    position: relative;
+}
+.locked::after{
+    position: absolute;
+    background-image: url(../img/locked.png);
+    background-color: transparent;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    content: ' ';
+    width: 4em;
+    height: 4em;
+    top: -16px;
+    right: 26%;
+}
+@media (max-width: 576px) and (max-width: 767.98px) { 
+    .icon-container{
+       height: 30vw;
+    }
+    .icon-container img{
+        height: inherit;
+        width: auto;
+     }
+     .btn-city, .btn2-city{
+        width: 5em;
+        height: 5em;
+     }
+ }
+
+ .downloadButton{
+     cursor: pointer;
+     color: inherit;
+ }
+ .downloadButton:hover{
+     text-decoration: none;
+     color:initial
+ }
+ .downloadButton *{
+     pointer-events: none;
+ }

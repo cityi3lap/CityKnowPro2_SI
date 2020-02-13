@@ -1,0 +1,73 @@
+{
+    "playerid": "TRILLOS",
+    "grade": 0,
+    "disability": {
+        "id": 0,
+        "type": ""
+    },
+    "minigames": [
+        {
+            "gameid": "G0MT01",
+            "gamegrade": 0,
+            "competence": "MT",
+            "level": 1,
+            "location": 1,
+            "server": {
+                "status": 0,
+                "lastdate": "",
+                "platform": ""
+            },
+            "progress": {
+                "round": 0,
+                "errors": 0,
+                "repeatedGuide": 0,
+                "total": 0,
+                "finished": false
+            }
+        }
+    ],
+    "intelligenceGames": [
+        {
+            "gameid": "INTMULT01",
+            "gamegrade": 10,
+            "competence": "20",
+            "level": 0,
+            "location": 0,
+            "server": {
+                "status": 0,
+                "lastdate": "",
+                "platform": ""
+            },
+            "progress": {
+                "round": 0,
+                "errors": 0,
+                "repeatedGuide": 0,
+                "total": 0,
+                "finished": false
+            },
+            "next": "",
+            "isUnlock": false,
+            "intelligences": [
+                {
+                    "name": 0,
+                    "intelligence_indicator": 0,
+                    "indicator": 0.0
+                }
+            ],
+            "styles": [
+                {
+                    "name": 0,
+                    "style_characteristic": 0
+                }
+            ]
+        }
+    ],
+    "locationspritedata": [],
+    "avatar": [{
+        "name": "",
+        "type": 0,
+        "gender": 0,
+        "skin": 0,
+        "proffesion": 0
+    }]
+}

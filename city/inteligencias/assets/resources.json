@@ -1,0 +1,64 @@
+{
+    "resources": [
+        {
+            "id": "7_sv2",
+            "type": "video",
+            "src": "./assets/resources/video/Frailejon.mp4",
+            "marker": "./assets/resources/marker/pattern-Frailejon.patt"
+        },
+        {
+            "id": "7_sv3",
+            "type": "video",
+            "src": "./assets/resources/video/Menjurjes.mp4",
+            "marker": "./assets/resources/marker/pattern-Menjurjes.patt"
+        },
+        {
+            "id": "7_sv4",
+            "type": "video",
+            "src": "./assets/resources/video/Rana.mp4",
+            "marker": "./assets/resources/marker/pattern-Rana.patt"
+        },
+        {
+            "id": "7_sv5",
+            "type": "video",
+            "src": "./assets/resources/video/Serrania.mp4",
+            "marker": "./assets/resources/marker/pattern-Serrania.patt"
+        },
+        {
+            "id": "7_sv6",
+            "type": "video",
+            "src": "./assets/resources/video/Zampona.mp4",
+            "marker": "./assets/resources/marker/pattern-Zampona.patt"
+        },
+        {
+            "id": "0-1",
+            "type": "link",
+            "src": "../../IM_Questions/Login.html?grade=firstgrade",
+            "marker": "./assets/resources/marker/pattern-1.patt"
+        },
+        {
+            "id": "2-3",
+            "type": "link",
+            "src": "../../IM_Questions/Login.html?grade=secondgrade",
+            "marker": "./assets/resources/marker/pattern-2.patt"
+        },
+        {
+            "id": "4-5",
+            "type": "link",
+            "src": "../../IM_Questions/Login.html?grade=fourthgrade",
+            "marker": "./assets/resources/marker/pattern-3.patt"
+        },
+        {
+            "id": "6-7",
+            "type": "link",
+            "src": "../../IM_Questions/Login.html?grade=sixthgrade",
+            "marker": "./assets/resources/marker/pattern-4.patt"
+        },
+        {
+            "id": "8-9",
+            "type": "link",
+            "src": "../../IM_Questions/Login.html?grade=eighthgrade",
+            "marker": "./assets/resources/marker/pattern-5.patt"
+        }
+    ]
+}
