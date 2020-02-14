@@ -16,12 +16,12 @@ window.addEventListener("load", function() {
               }
             },
             {
-              class: "btn2-city locked",
+              class: "btn2-city",
               img: "./img/game.png",
               label: "City Know Pro",
               action: {
                 type: "navigate",
-                to: 0
+                to: "./game"
               }
             }
           ]
