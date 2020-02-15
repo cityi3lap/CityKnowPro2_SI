@@ -40,6 +40,11 @@ dentro de las carpetas **city_laravel** y **location_laravel** deberá ejecutars
 
 dentro de la carpeta city_laravel ejecutar el comando **php artisan migrate**
 
+### Paso 4 poblar datos iniciales 
+con la base de datos talentumehs_city creada y sus tablas cargadas ejecutar los comandos
+ 1. php artisan db:seed
+
+
 ## Desarrollo
 Para realizar una actualización de despliegue es necesario tener en cuenta las siguientes consideraciones:
 
