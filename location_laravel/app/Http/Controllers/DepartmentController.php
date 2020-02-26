@@ -13,6 +13,11 @@ class DepartmentController extends Controller
         $department = Department::with(['towns.type','towns.department','towns.headquarters.institution'])->findOrFail($id);
         return $department;
     }
+    public function departmentByName($name){
+        $name = strtoupper($name);
+        $department = DB::table('departments')->select('id')->where('name', $name)->get();
+        return $department;
+    }
     public function headquarters($id){
         $headquarters = DB::table('headquarters')
         ->join('towns', 'towns.id', '=', 'headquarters.town_id')
@@ -22,4 +27,16 @@ class DepartmentController extends Controller
         ->get();
         return $headquarters;
     }
+
+    public function store(Request $request)
+    {
+        $department = new Department;
+
+        $department->name = $request->name;
+        $department->cod_dane = $request->cod_dane;
+
+        $department->save();
+        return $department;
+    }
+
 }

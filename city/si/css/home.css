@@ -351,6 +351,7 @@ body {
     font-weight: bold;
     font-size: 1.2rem;
     padding: 1em 0px;
+    margin: 0px;
 }
 
 
@@ -572,7 +573,14 @@ table {
     margin: 0 auto;
 }
 
+@page {
+    margin-top: 5cm;  
+    margin-bottom: 5cm;
+}
 
+.breakPagePdf {
+    page-break-before: always;
+}
 
 
 /* Info Users */

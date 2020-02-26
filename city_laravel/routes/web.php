@@ -19,7 +19,7 @@
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
 // Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 // Route::post('login', 'Auth\LoginController@login');
-Route::get('/si/logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
 // Registration Routes...
 if ($options['register'] ?? true) {
@@ -39,7 +39,7 @@ if ($options['verify'] ?? false) {
 
 Auth::routes();
 
-Route::get('si/home', 'HomeController@index')->name('home');
+Route::get('home', 'HomeController@index')->name('home');
 
 // Route::get('si/{path?}', 'HomeController@index')->name('home');
 // Route::get('si/{path?}', 'HomeController@index')->name('home');
@@ -95,6 +95,7 @@ Route::get('/competences/styles/{username}', 'Api\GetByStudent@getStylesByCompet
 // Intelligences
 Route::get('/intelligences/headquarter/{id}', 'Api\GetByHeadquarter@getIntelligences');
 Route::get('/intelligences/grade/{headquarter}/{id}', 'Api\GetByGrade@getIntelligences');
+Route::get('/intelligences/byGrade/{username}', 'Api\GetInfoIntelligences@getOneByGrade');
 Route::get('/intelligences/{locationType}/{id}', 'Api\GetByLocationType@getIntelligences');
 Route::get('/intelligences/{username}', 'Api\GetInfoIntelligences@getOne');
 Route::post('/intelligences', 'Api\GetInfoIntelligences@getMoreThanOne');
@@ -106,6 +107,7 @@ Route::get('/styles/{locationType}/{id}', 'Api\GetByLocationType@getStyles');
 Route::get('/styles/{username}', 'Api\GetInfoStyles@getOne');
 Route::post('/styles', 'Api\GetInfoStyles@getMoreThanOne');
 
+// Get by subjects (initials)
 Route::get('/students/{locationType}/{locationId}', 'Api\GetStudents@get');
 Route::get('/grade/{headquarter}/{id}', 'Api\GetByGrade@get');
 Route::get('/student/{id}', 'Api\GetByStudent@get');
@@ -114,6 +116,12 @@ Route::get('/headquarter/{id}', 'Api\GetByHeadquarter@get');
 Route::post('/simat/{dataType}', 'Api\Simat@save');
 Route::get('/{locationType}/{id}', 'Api\GetByLocationType@get');
 Route::get('/playersPlayed', 'Api\GetPlayersPlayed@get');
+
+// Get by subject and show minigames 
+Route::get('/bySubject/grade/{headquarter}/{id}/{subject}', 'Api\GetByGrade@getBySubject');
+Route::get('/bySubject/student/{id}/{subject}', 'Api\GetByStudent@getBySubject');
+Route::get('/bySubject/headquarter/{id}/{subject}', 'Api\GetByHeadquarter@getBySubject');
+Route::get('/bySubject/{locationType}/{id}/{subject}', 'Api\GetByLocationType@getBySubject');
 
 // Games played and intelligences
 Route::get('/gamesPlayed/student/{id}', 'Api\GetGamesPlayed@getByStudent');
@@ -126,6 +134,7 @@ Route::get('/gamesPlayed/{locationType}/{id}', 'Api\GetGamesPlayed@getByLocation
 Route::get('/gamesPlayed/{locationType}/{id}/{intelligences}', 'Api\GetGamesPlayed@getByLocationType');
 
 // Get average by grade
+Route::get('/byGrade/school/student/{username}', 'Api\GetByStudent@getScoreByMGGradeAndSubjectForSchool');
 Route::get('/byGrade/student/{username}', 'Api\GetByStudent@getScoreByMGGradeAndSubject');
 // Route::get('/byGrade/grade/{headquarter}/{id}', 'Api\GetByGrade@getScoreByMGGrade');
 // Route::get('/byGrade/headquarter/{id}', 'Api\GetByHeadquarter@getScoreByMGGrade');
@@ -142,3 +151,6 @@ Route::get('/recomendations/student/{username}', 'Api\GetByStudent@getRecomendat
 Route::get('/recomendations/grade/{headquarter}/{id}', 'Api\GetByGrade@getRecomendationsAndDbas');
 Route::get('/recomendations/headquarter/{id}', 'Api\GetByHeadquarter@getRecomendationsAndDbas');
 Route::get('/recomendations/{locationType}/{id}', 'Api\GetByLocationType@getRecomendationsAndDbas');
+
+// Get performances
+Route::get('/performances', 'Api\GetPerformances@get');

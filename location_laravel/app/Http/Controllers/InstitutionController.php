@@ -14,6 +14,11 @@ class InstitutionController extends Controller
         $institution = Institution::with(['headquarters.town.department'])->findOrFail($id);
         return $institution;
     }
+    public function institutionByName($name){
+        $name = strtoupper($name);
+        $institution = DB::table('institutions')->select('id')->where('name', $name)->get();
+        return $institution;
+    }
     public function headquarters($id){
         $headquarters = DB::table('headquarters')
         ->join('institutions', 'institutions.id', '=', 'headquarters.institution_id')
@@ -21,5 +26,14 @@ class InstitutionController extends Controller
         ->select('headquarters.id','headquarters.name')
         ->get();
         return $headquarters;
+    }
+    public function store(Request $request)
+    {
+        $institution = new Institution;
+
+        $institution->name = $request->name;
+
+        $institution->save();
+        return $institution;
     }
 }

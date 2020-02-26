@@ -48,6 +48,7 @@ class GetGamesPlayed extends Controller
                             ->select('gur.id')
                             ->where('gu.headquarter_id', $headquarter_id)
                             ->where('gu.grade_id', $id)
+                            ->groupBy('gur.mini_game_id')
                             ->get()
                             ->toArray();
         $gu_records_int_array = [];
@@ -125,6 +126,7 @@ class GetGamesPlayed extends Controller
                             ->join('game_users AS gu', 'gu.id', '=', 'gur.game_user_id')
                             ->select('gur.id')
                             ->where('gu.'.$toSearch, $id)
+                            ->groupBy('gur.mini_game_id')
                             ->get()
                             ->toArray();
         $gu_records_int_array = [];
@@ -213,6 +215,7 @@ class GetGamesPlayed extends Controller
                             ->join('game_users AS gu', 'gu.id', '=', 'gur.game_user_id')
                             ->select('gur.id')
                             ->whereIn('gu.'.$column_name, $ids_array)
+                            ->groupBy('gur.mini_game_id')
                             ->get()
                             ->toArray();
         $gu_records_int_array = [];

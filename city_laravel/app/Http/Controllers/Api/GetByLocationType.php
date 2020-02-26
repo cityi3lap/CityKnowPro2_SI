@@ -44,6 +44,28 @@ class GetByLocationType extends Controller
         }
     }
 
+    protected function getBySubject($locationType, $id, $subject) {
+        $headquarters = getHeadquarters($locationType, $id);
+        $result = DB::table('game_user_records')
+                ->join('game_users', 'game_user_records.game_user_id', '=', 'game_users.id')
+                ->join('mini_games', 'game_user_records.mini_game_id', '=', 'mini_games.id')
+                ->join('subject_mini_game', 'mini_games.id', '=', 'subject_mini_game.mini_game_id')
+                ->join('subjects', 'subject_mini_game.subject_id', '=', 'subjects.id')
+                ->select(DB::raw('ROUND(AVG(game_user_records.total_score),1) as average, mini_games.name'))
+                ->whereIn('game_users.headquarter_id', $headquarters)
+                ->where('subjects.id', $subject)
+                ->groupBy('mini_games.name')
+                ->get();
+
+        if (!empty($result[0])) {
+            http_response_code(200);
+            return $result;
+        } else {
+            http_response_code(400);
+            echo json_encode(array("message" => "No info found."));
+        }
+    }
+
     protected function getIntelligences($locationType, $id) {
         $headquarters = getHeadquarters($locationType, $id);
 
@@ -226,10 +248,10 @@ class GetByLocationType extends Controller
                         ->whereIn('gu.headquarter_id', $headquarters)
                         ->get();
 
-        $groupBySunAndGrade = groupRecomendationsBySubAndGrade($result_mg);
-        $toReturn = $groupBySunAndGrade;
+        $groupBySubAndGrade = groupRecomendationsBySubAndGrade($result_mg);
+        $toReturn = $groupBySubAndGrade;
 
-        foreach ($groupBySunAndGrade as $key_sg => $element) {
+        foreach ($groupBySubAndGrade as $key_sg => $element) {
             foreach ($element as $key => $value) {
                 $value = (object) $value;
                 $result = DB::table('performances AS per')
@@ -250,6 +272,7 @@ class GetByLocationType extends Controller
                     unset($toReturn[$key_sg][$key]);
                 }
             }
+            $toReturn[$key_sg] = array_values($toReturn[$key_sg]);
         }
 
         return $toReturn;

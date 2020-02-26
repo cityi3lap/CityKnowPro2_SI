@@ -177,6 +177,14 @@ class UserInfo extends Controller
                         ->toArray();
             $permissions = DB::table('permissions')->select('id', 'name', 'desc')->get()->toArray();
         }
+        $user_permission = DB::table('permissions AS per')
+                            ->join('role_permission AS rp', 'rp.permission_id', '=', 'per.id')
+                            ->join('roles AS rl', 'rl.id', '=', 'rp.role_id')
+                            ->join('user_role AS ur', 'ur.role_id', '=', 'rl.id')
+                            ->select('per.*')
+                            ->where('ur.user_id', $userId)
+                            ->get()
+                            ->toArray();
 
         $location_info = DB::table('users')
                             ->join('user_hierarchies AS uh', 'uh.user_id', '=', 'users.id')
@@ -204,15 +212,28 @@ class UserInfo extends Controller
                 //     array_push($grades_array, $to_push_grade);
                 // }
             } else {
-                // Get info about the grades, they are the same always
-                // $grades_info = DB::table('grades')
-                //                 ->select('id', 'name')
-                //                 ->where('id', $row_id)
-                //                 ->get();
-                // foreach ($grades_info as $key => $grade) {
-                //     $to_push_grade = (object) array('id' => $grade->id, 'name' => $grade->name);
-                //     array_push($grades_array, $to_push_grade);
-                // }
+                $ids_info = DB::table('user_hierarchies AS uh')
+                                ->join('users AS us', 'us.id', '=', 'uh.user_id')
+                                ->select('uh.destiny_hierarchy_id')
+                                ->where('us.id', $userId)
+                                ->orderBy('uh.id', 'asc')
+                                ->get()
+                                ->toArray();
+                $ids_info = array_map(function ($obj) { return $obj->destiny_hierarchy_id; }, $ids_info);
+
+                $ids_arrays = array_chunk($ids_info, 2);
+                foreach ($ids_arrays as $key => $ids_array) {
+                    $array_to_push = $this->insertStudentsInArray($ids_array);
+                    foreach ($array_to_push as $key => $value) {
+                        array_push($game_users, $value);
+                    }
+                    $open_location = config('env_vars.open_location_url');
+                    $info_from_location = json_decode(file_get_contents($open_location.'api/headquarters/'.$ids_array[0]));
+                    $hq_grade_to_push = (object) array('id' => $info_from_location->id, 'name' => $info_from_location->name.' - '.$array_to_push[0]->grade_name);
+                    array_push($hq_grades, $hq_grade_to_push);
+                }
+                $hq_grades = $this->unique_array_by_id($hq_grades);
+                $game_users = array_values($this->unique_array_by_id($game_users));
             }
 
             if ($table_name == 'departments') {
@@ -271,14 +292,14 @@ class UserInfo extends Controller
                                                     'town_id' => $headquarter->town_id,
                                                     'institution_id' => $headquarter->institution->id);
                 array_push($headquarters_array, $to_push_headquarter);
-            } 
+            }
         }
         $institutions_array = $this->unique_array_by_id($institutions_array);
 
         foreach ($headquarters_array as $key => $hq) {
             $info_hq_grade = DB::table('grades')
                                 ->join('game_users AS gu', 'gu.grade_id', '=', 'grades.id')
-                                ->select('grades.id', 'grades.name', 'gu.username', 'gu.id AS userId')
+                                ->select('grades.id', 'grades.name', 'gu.username', 'gu.id AS userId', 'gu.first_name', 'gu.second_name', 'gu.first_surname', 'gu.second_surname')
                                 ->where('gu.headquarter_id', $hq->id)
                                 ->get();
 
@@ -287,15 +308,21 @@ class UserInfo extends Controller
                                                     'name' => $hq->name.' - '.$hq_g->name);
                 array_push($hq_grades, $hq_grade_to_push);
 
-                $game_user_to_push = (object) array('id' => $hq_g->userId, 'name' => $hq_g->username);
+                $n1 = $hq_g->first_name ?? '';
+                $n2 = $hq_g->second_name ?? '';
+                $s1 = $hq_g->first_surname ?? '';
+                $s2 = $hq_g->second_surname ?? '';
+                $full_name = $n1.' '.$n2.' '.$s1.' '.$s2;
+                $game_user_to_push = (object) array('id' => $hq_g->userId, 'name' => $full_name);
                 array_push($game_users, $game_user_to_push);
             }
+	    $hq_grades = $this->unique_array_by_id($hq_grades);
         }
 
         $final_array = array('departments'=>$departments_array, 'towns'=>$towns_array,
                             'institutions'=>$institutions_array, 'headquarters'=>$headquarters_array, 
                             'hq_grades'=>$hq_grades, 'game_users'=>$game_users, 'users'=>$users,
-                            'roles'=>$roles, 'permissions'=>$permissions);
+                            'roles'=>$roles, 'permissions'=>$permissions, 'user_permissions'=>$user_permission);
         return $final_array;
     }
 
@@ -305,5 +332,28 @@ class UserInfo extends Controller
             if (!in_array($element, $array_to_return)) array_push($array_to_return, $element);
         }
         return $array_to_return;
+    }
+
+    protected function insertStudentsInArray($ids_hq_grade) {
+        $array = [];
+        $students_db = DB::table('game_users AS gu')
+                        ->join('grades AS gr', 'gr.id', '=', 'gu.grade_id')
+                        ->select('gu.username', 'gu.id', 'gu.first_name', 'gu.second_name', 'gu.first_surname', 'gu.second_surname', 'gu.grade_id', 'gr.name AS grade_name')
+                        ->where('headquarter_id', $ids_hq_grade[0])
+                        ->where('grade_id', $ids_hq_grade[1])
+                        ->get()
+                        ->toArray();
+
+        foreach ($students_db as $key => $element) {
+            $n1 = $element->first_name ?? '';
+            $n2 = $element->second_name ?? '';
+            $s1 = $element->first_surname ?? '';
+            $s2 = $element->second_surname ?? '';
+            $full_name = $n1.' '.$n2.' '.$s1.' '.$s2;
+            $game_user_to_push = (object) array('id' => $element->id, 'name' => $full_name, 'grade' => $element->grade_id, 'grade_name' => $element->grade_name);
+            array_push($array, $game_user_to_push);
+        }
+
+        return $array;
     }
 }

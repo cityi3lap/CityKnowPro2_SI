@@ -40,6 +40,27 @@ class GetByHeadquarter extends Controller
         }
     }
 
+    protected function getBySubject($id, $subject) {
+        $result = DB::table('game_user_records')
+                    ->join('game_users', 'game_user_records.game_user_id', '=', 'game_users.id')
+                    ->join('mini_games', 'game_user_records.mini_game_id', '=', 'mini_games.id')
+                    ->join('subject_mini_game', 'mini_games.id', '=', 'subject_mini_game.mini_game_id')
+                    ->join('subjects', 'subject_mini_game.subject_id', '=', 'subjects.id')
+                    ->select(DB::raw('ROUND(AVG(game_user_records.total_score),1) as average, mini_games.name'))
+                    ->where('game_users.headquarter_id', $id)
+                    ->where('subjects.id', $subject)
+                    ->groupBy('mini_games.name')
+                    ->get();
+
+        if (!empty($result[0])) {
+            http_response_code(200);
+            return $result;
+        } else {
+            http_response_code(400);
+            echo json_encode(array("message" => "No info found."));
+        }
+    }
+
     protected function getIntelligences($id) {
         $result = DB::table('gu_record_intelligence_ind_desc_styles AS guri')
                     ->join('game_user_records', 'guri.game_user_record_id', '=', 'game_user_records.id')
@@ -226,6 +247,7 @@ class GetByHeadquarter extends Controller
                     unset($toReturn[$key_sg][$key]);
                 }
             }
+            $toReturn[$key_sg] = array_values($toReturn[$key_sg]);
         }
 
         return $toReturn;

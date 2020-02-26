@@ -44,6 +44,8 @@ class RoleController extends Controller
             $slug = $permission->slug;
             $destiny_hierarchy = DB::table('destiny_hierarchies')->select('id')->where('table_name', $slug)->first();
             $destiny_hierarchy_id = $destiny_hierarchy->id ?? null;
+        } else {
+            $destiny_hierarchy_id = $level_permission;
         }
 
         $role = new Role([

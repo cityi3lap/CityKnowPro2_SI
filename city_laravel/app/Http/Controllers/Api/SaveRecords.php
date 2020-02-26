@@ -241,7 +241,7 @@ class SaveRecords extends Controller
                                 $intelligences = $minigame->intelligences;
                                 $styles = $minigame->styles;
                                 $styles_inserted = array();
-                                $vocationals = $minigame->vocations;
+                                $vocationals = $minigame->vocations ?? [];
                                 if (isset($intelligences[0])) {
                                     foreach ($intelligences as $key => $int) {
                                         $int = (object) $int;

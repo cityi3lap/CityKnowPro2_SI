@@ -44,6 +44,30 @@ class GetByStudent extends Controller
         }
     }
 
+    protected function getBySubject($id, $subject) {
+        $regex = '/^[A-Za-z]+[0-9]+/';
+        $byUsername = preg_match($regex, $id);
+        $toSearch = $byUsername ? 'username' : 'id';
+        $result = DB::table('game_user_records')
+                    ->join('game_users', 'game_user_records.game_user_id', '=', 'game_users.id')
+                    ->join('mini_games', 'game_user_records.mini_game_id', '=', 'mini_games.id')
+                    ->join('subject_mini_game', 'mini_games.id', '=', 'subject_mini_game.mini_game_id')
+                    ->join('subjects', 'subject_mini_game.subject_id', '=', 'subjects.id')
+                    ->select(DB::raw('ROUND(AVG(game_user_records.total_score),1) as average, mini_games.name'))
+                    ->where('game_users.'.$toSearch, $id)
+                    ->where('subjects.id', $subject)
+                    ->groupBy('mini_games.name')
+                    ->get();
+
+        if (!empty($result[0])) {
+            http_response_code(200);
+            return $result;
+        } else {
+            http_response_code(400);
+            echo json_encode(array("message" => "No info found."));
+        }
+    }
+
     protected function getIntelligencesByCompetence($username) {
         $regex = '/^[A-Za-z]+[0-9]+/';
         $byUsername = preg_match($regex, $username);
@@ -124,8 +148,42 @@ class GetByStudent extends Controller
         $toReturn = array();
 
         foreach ($db_info as $key => $element) {
-            if (!isset($toReturn[$element->grade_id])) $toReturn[$element->grade_id] = array();
-            array_push($toReturn[$element->grade_id], $element);
+            if (!isset($toReturn[$element->name])) $toReturn[$element->name] = array();
+            array_push($toReturn[$element->name], $element);
+        }
+
+        if (!empty($db_info[0])) {
+            http_response_code(200);
+            return $toReturn;
+        } else {
+            http_response_code(400);
+            echo json_encode(array("message" => "No info found."));
+        }
+    }
+
+    protected function getScoreByMGGradeAndSubjectForSchool($username) {
+        $regex = '/^[A-Za-z]+[0-9]+/';
+        $byUsername = preg_match($regex, $username);
+        $toSearch = $byUsername ? 'username' : 'id';
+
+        $db_info = DB::table('game_user_records AS gur')
+                        ->join('mini_games AS mg', 'mg.id', '=', 'gur.mini_game_id')
+                        ->join('game_users AS gu', 'gu.id', '=', 'gur.game_user_id')
+                        ->join('grades', 'grades.id', '=', 'mg.grade_id')
+                        ->join('subject_mini_game AS smg', 'smg.mini_game_id', '=', 'mg.id')
+                        ->join('subjects AS sj', 'sj.id', '=', 'smg.subject_id')
+                        ->select(DB::raw('ROUND(AVG(gur.total_score),1) as average'), 'grades.name',
+                                        'grades.id AS grade_id', 'smg.subject_id', 'sj.name AS subject')
+                        ->where('gu.'.$toSearch, $username)
+                        ->where('mg.location_id', 110) // 110 is the id for the location school
+                        ->groupBy('mg.grade_id', 'smg.subject_id')
+                        ->get();
+
+        $toReturn = array();
+
+        foreach ($db_info as $key => $element) {
+            if (!isset($toReturn[$element->name])) $toReturn[$element->name] = array();
+            array_push($toReturn[$element->name], $element);
         }
 
         if (!empty($db_info[0])) {
@@ -202,6 +260,7 @@ class GetByStudent extends Controller
                     unset($toReturn[$key_sg][$key]);
                 }
             }
+            $toReturn[$key_sg] = array_values($toReturn[$key_sg]);
         }
 
         return $toReturn;

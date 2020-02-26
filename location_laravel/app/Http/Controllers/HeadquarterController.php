@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Headquarter;
+use App\Institution;
+use App\Town;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,6 +19,21 @@ class HeadquarterController extends Controller
     public function headquarterByName($name){
         $name = strtoupper($name);
         $headquarter = DB::table('headquarters')->select('id')->where('name', $name)->get();
+        return $headquarter;
+    }
+    public function store(Request $request)
+    {
+        $headquarter = new Headquarter;
+
+        $headquarter->name = $request->name;
+
+        $town = Town::findOrFail($request->town);
+        $headquarter->town()->associate($town);
+
+        $institution = Institution::findOrFail($request->institution);
+        $headquarter->institution()->associate($institution);
+
+        $headquarter->save();
         return $headquarter;
     }
 }

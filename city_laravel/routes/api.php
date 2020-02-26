@@ -20,3 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/init/{username}','GameUserController@init');
 Route::get('/userInfo/{username}', 'Api\UserInfo@get');
 Route::put('/saveRecords', 'Api\SaveRecords@save');
+
+Route::post('/simat', 'Api\Simat@save');
+
