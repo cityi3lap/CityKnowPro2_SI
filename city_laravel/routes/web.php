@@ -47,7 +47,7 @@ Route::get('home', 'HomeController@index')->name('home');
 
 // Route::view('/{path?}', 'home');
 
-Route::get('si/{path?}', function () {
+Route::get('city/{path?}', function () {
     return view('home'); // or wherever your React app is bootstrapped.
 })->where('path', '.*');
 

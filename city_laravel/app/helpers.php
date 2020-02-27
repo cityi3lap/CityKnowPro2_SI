@@ -17,7 +17,8 @@ if (!function_exists('setCompetencesArray')) {
 
 if (!function_exists('getHeadquarters')) {
     function getHeadquarters($locationType, $id) {
-        $open_location = config('env_vars.open_location_url');
+        // $open_location = config('env_vars.open_location_url');
+        $open_location = 'http://'.$_SERVER['SERVER_ADDR'].':8088/city/ol/';
         $headquarters = json_decode(file_get_contents($open_location.'api/'.$locationType.'sHeadquarters/'.$id), true);
         $array_ids_headquarters = [];
         foreach ($headquarters as $headqrtr) {

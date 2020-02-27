@@ -200,7 +200,8 @@ class UserInfo extends Controller
             $row_id = $location->destiny_hierarchy_id;
 
             if ($table_name !== 'grades') {
-                $open_location = config('env_vars.open_location_url');
+                // $open_location = config('env_vars.open_location_url');
+                $open_location = 'http://'.$_SERVER['SERVER_ADDR'].':8088/city/ol/';
                 $info_from_location = json_decode(file_get_contents($open_location.'api/'.$table_name.'/'.$row_id));
 
                 // Get info about the grades, they are the same always
@@ -227,7 +228,8 @@ class UserInfo extends Controller
                     foreach ($array_to_push as $key => $value) {
                         array_push($game_users, $value);
                     }
-                    $open_location = config('env_vars.open_location_url');
+                    // $open_location = config('env_vars.open_location_url');
+                    $open_location = 'http://'.$_SERVER['SERVER_ADDR'].':8088/city/ol/';
                     $info_from_location = json_decode(file_get_contents($open_location.'api/headquarters/'.$ids_array[0]));
                     $hq_grade_to_push = (object) array('id' => $info_from_location->id, 'name' => $info_from_location->name.' - '.$array_to_push[0]->grade_name);
                     array_push($hq_grades, $hq_grade_to_push);
@@ -316,7 +318,7 @@ class UserInfo extends Controller
                 $game_user_to_push = (object) array('id' => $hq_g->userId, 'name' => $full_name);
                 array_push($game_users, $game_user_to_push);
             }
-	    $hq_grades = $this->unique_array_by_id($hq_grades);
+            $hq_grades = $this->unique_array_by_id($hq_grades);
         }
 
         $final_array = array('departments'=>$departments_array, 'towns'=>$towns_array,

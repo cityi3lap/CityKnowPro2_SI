@@ -22,7 +22,8 @@ class Simat extends Controller
             // Get headquarter by the name sent or create a new headquarter
             $headquarter_url = strtoupper(str_replace('_', '%20', $user->nombre_sede));
             $headquarter = strtoupper(str_replace('_', ' ', $user->nombre_sede));
-            $open_location = config('env_vars.open_location_url');
+            // $open_location = config('env_vars.open_location_url');
+            $open_location = 'http://'.$_SERVER['SERVER_ADDR'].':8088/city/ol/';
             $headquarter_id = json_decode(file_get_contents($open_location.'api/headquarterByName/'.$headquarter_url), true);
             if (isset($headquarter_id[0])) {
                 $headquarter_id = $headquarter_id[0]["id"];
@@ -95,7 +96,8 @@ class Simat extends Controller
     }
 
     protected function newHeadquarter($name, $town, $institution) {
-        $open_location = config('env_vars.open_location_url');
+        // $open_location = config('env_vars.open_location_url');
+        $open_location = 'http://'.$_SERVER['SERVER_ADDR'].':8088/city/ol/';
         $data = array('name' => $name, 'town' => $town, 'institution' => $institution);
         $url = $open_location.'api/headquarters';
         $options = array(
@@ -110,7 +112,8 @@ class Simat extends Controller
         return $result;
     }
     protected function newInstitution($name) {
-        $open_location = config('env_vars.open_location_url');
+        // $open_location = config('env_vars.open_location_url');
+        $open_location = 'http://'.$_SERVER['SERVER_ADDR'].':8088/city/ol/';
         $data = array('name' => $name);
         $url = $open_location.'api/institutions';
         $options = array(
@@ -125,7 +128,8 @@ class Simat extends Controller
         return $result;
     }
     protected function newTown($name, $zone, $town_type) {
-        $open_location = config('env_vars.open_location_url');
+        // $open_location = config('env_vars.open_location_url');
+        $open_location = 'http://'.$_SERVER['SERVER_ADDR'].':8088/city/ol/';
         $data = array('department' => 2, 'name' => $name, 'zone' => $zone, 'type' => $town_type);
         $url = $open_location.'api/towns';
         $options = array(
