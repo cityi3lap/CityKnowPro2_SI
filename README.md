@@ -38,9 +38,9 @@ Para realizar el correcto despliegue del sistema de información deberá procede
 
 dentro de las carpetas **city_laravel** y **location_laravel** deberá ejecutarse el comando **sudo chmod -R 777 storage** (el comando deberá ejecutarse estando dentro de cada una de las dos carpetas mencionadas)
 
-dentro de la carpeta city_laravel ejecutar el comando **php artisan migrate**
+dentro de la carpeta city_laravel ejecutar el comando **php artisan migrate** si no se importa la base de datos directamente
 
-### Paso 4 poblar datos iniciales 
+### Paso 4 poblar datos iniciales (si no se importa la base de datos directamente)
 con la base de datos talentumehs_city creada y sus tablas cargadas ejecutar los comandos
  1. php artisan db:seed
 
