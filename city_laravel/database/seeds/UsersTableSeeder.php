@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
         $departmentPermission   = Permission::where('slug','Departamentos')->first();
         $townPermission         = Permission::where('slug','Municipios')->first();
         $institutionPermission  = Permission::where('slug','Instituciones')->first();
-        $headquaterPermission   = Permission::where('slug','Sedes')->first();
+        $headquarterPermission   = Permission::where('slug','Sedes')->first();
         $groupPermission        = Permission::where('slug','Grupos')->first();
         $studentPermission      = Permission::where('slug','Estudiantes')->first();
         $statisticPermission    = Permission::where('slug','Estadisticas')->first();
@@ -40,7 +40,7 @@ class UsersTableSeeder extends Seeder
         // $manager->permissions()->attach($departmentPermission);
         // $manager->permissions()->attach($townPermission);
         // $manager->permissions()->attach($institutionPermission);
-        // $manager->permissions()->attach($headquaterPermission);
+        // $manager->permissions()->attach($headquarterPermission);
         // $manager->permissions()->attach($groupPermission);
         // $manager->permissions()->attach($studentPermission);
         // $manager->permissions()->attach($statisticPermission);
@@ -69,7 +69,7 @@ class UsersTableSeeder extends Seeder
         // $departments_role->permissions()->attach($departmentPermission);
         // $departments_role->permissions()->attach($townPermission);
         // $departments_role->permissions()->attach($institutionPermission);
-        // $departments_role->permissions()->attach($headquaterPermission);
+        // $departments_role->permissions()->attach($headquarterPermission);
         // $departments_role->permissions()->attach($groupPermission);
         // $departments_role->permissions()->attach($studentPermission);
         // $departments_role->permissions()->attach($statisticPermission);

@@ -19,7 +19,7 @@ class RolTableSeeder extends Seeder
         $departmentPermission   = Permission::where('name','Departamentos')->first();
         $townPermission         = Permission::where('name','Municipios')->first();
         $institutionPermission  = Permission::where('name','Instituciones')->first();
-        $headquaterPermission   = Permission::where('name','Sedes')->first();
+        $headquarterPermission   = Permission::where('name','Sedes')->first();
         $groupPermission        = Permission::where('name','Grupos')->first();
         $studentPermission      = Permission::where('name','Estudiantes')->first();
         $createRolePermission   = Permission::where('name','Creación de roles')->first();
@@ -37,7 +37,7 @@ class RolTableSeeder extends Seeder
         $manager_role->permissions()->attach($departmentPermission);
         $manager_role->permissions()->attach($townPermission);
         $manager_role->permissions()->attach($institutionPermission);
-        $manager_role->permissions()->attach($headquaterPermission);
+        $manager_role->permissions()->attach($headquarterPermission);
         $manager_role->permissions()->attach($groupPermission);
         $manager_role->permissions()->attach($studentPermission);
         $manager_role->permissions()->attach($createRolePermission);
@@ -53,7 +53,7 @@ class RolTableSeeder extends Seeder
         $department_role->permissions()->attach($departmentPermission);
         $department_role->permissions()->attach($townPermission);
         $department_role->permissions()->attach($institutionPermission);
-        $department_role->permissions()->attach($headquaterPermission);
+        $department_role->permissions()->attach($headquarterPermission);
         $department_role->permissions()->attach($groupPermission);
         $department_role->permissions()->attach($studentPermission);
         $department_role->permissions()->attach($createRolePermission);

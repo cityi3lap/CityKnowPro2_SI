@@ -99,11 +99,27 @@ const ResultSubjectInstitution = ({ idForFetch, showAllData, limitsForyLabels, n
     } else {
         return (
             <div className="col-12" >
-                <TittleTab tittle={'Resultados por Asignatura'}  nameItemClicked={nameItemClicked}/>
-                <GroupCardsAverage titleCardTotalGames="Total de juegos" averageTotalGames={dataGamesPlayed.total_games} titleAverage="Promedio de juegos jugados" averageGamesPlayed={dataGamesPlayed.average} />
+                <TittleTab
+                    tittle={'Resultados por Asignatura'}
+                    nameItemClicked={nameItemClicked} />
+                <GroupCardsAverage
+                    titleCardTotalGames="Total de juegos"
+                    averageTotalGames={dataGamesPlayed.total_games}
+                    titleAverage="Promedio de juegos jugados"
+                    averageGamesPlayed={dataGamesPlayed.average} />
 
-                <CardGraph tabs={tabs} jsonApi={jsonApi} showAllData={showAllData} heightGraph={225} widthGraph={768} typeGraph='line' limitsForyLabels={limitsForyLabels} />
-                <CardConvenciones desc={desc} conventions={conventions} showDesc={false} />
+                <CardGraph
+                    tabs={tabs}
+                    jsonApi={jsonApi}
+                    showAllData={showAllData}
+                    heightGraph={225}
+                    widthGraph={768}
+                    // typeGraph='line'
+                    limitsForyLabels={limitsForyLabels} />
+                {/* <CardConvenciones
+                    desc={desc}
+                    conventions={conventions}
+                    showDesc={false} /> */}
             </div>
         )
     }

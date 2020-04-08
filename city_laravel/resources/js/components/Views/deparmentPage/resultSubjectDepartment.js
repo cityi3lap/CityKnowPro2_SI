@@ -77,7 +77,7 @@ const ResultSubjectDepartment = (props) => {
             const result = await fetchApi(`http://127.0.0.1:8000/department/${props.idForFetch}`)
             setJsonApi(result)
             const gamesPlayedInfo = await fetchApi(`http://127.0.0.1:8000/gamesPlayed/department/${props.idForFetch}`)
-            
+
             setdataGamesPlayed(gamesPlayedInfo)
             setisLoaded(false)
         } catch (error) {
@@ -95,10 +95,20 @@ const ResultSubjectDepartment = (props) => {
     } else {
         return (
             <div className="col-12">
-                <TittleTab tittle={'Resultados por asignatura'} nameItemClicked={props.nameItemClicked} />
-                <GroupCardsAverage titleCardTotalGames="Total de juegos" averageTotalGames={dataGamesPlayed.total_games} titleAverage="Promedio de juegos jugados" averageGamesPlayed={dataGamesPlayed.average} />
-                <CardGraph tabs={tabs} jsonApi={jsonApi} showAllData={props.showAllData} typeGraph='line' limitsForyLabels={props.limitsForyLabels} />
-                <CardConvenciones desc={desc} conventions={conventions} showDesc={false} />
+                <TittleTab
+                    tittle={'Resultados por asignatura'}
+                    nameItemClicked={props.nameItemClicked} />
+                <GroupCardsAverage
+                    titleCardTotalGames="Total de juegos"
+                    averageTotalGames={dataGamesPlayed.total_games}
+                    titleAverage="Promedio de juegos jugados"
+                    averageGamesPlayed={dataGamesPlayed.average} />
+                <CardGraph
+                    tabs={tabs}
+                    jsonApi={jsonApi}
+                    showAllData={props.showAllData}
+                    limitsForyLabels={props.limitsForyLabels} />
+                {/* <CardConvenciones desc={desc} conventions={conventions} showDesc={false} /> */}
             </div>
         )
     }

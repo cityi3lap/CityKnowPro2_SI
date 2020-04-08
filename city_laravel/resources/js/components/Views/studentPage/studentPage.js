@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom'
 import ListSearch from '../../Organisms/listSearch/listSearch'
 import ContentPageStudent from './contentPageStudent'
 
+import { fetchPost } from '../../../function/GlobalFunctions';
+
 class StudentPage extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             idForSearch: null,
-            infoForSelectList: props.infoForSelectList,
+            infoForSelectList: [],
 
             // Json to defined Name and router tabs
             tabsPage: [
@@ -63,7 +65,8 @@ class StudentPage extends React.Component {
                     isData={true}
                     infoForSelectList={this.state.infoForSelectList}
                     isHovering={this.props.isHovering}
-                    getNameItemClicked={this.getNameItemClicked} />
+                    getNameItemClicked={this.getNameItemClicked} 
+                    headquarters={this.props.headquarters}/>
                 <ContentPageStudent
                     messageSelectedView={this.state.messageSelectedView}
                     getIdForSearch={this.state.idForSearch}

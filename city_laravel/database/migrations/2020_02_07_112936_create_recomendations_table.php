@@ -19,7 +19,7 @@ class CreateRecomendationsTable extends Migration
             $table->unsignedInteger('subject_id');
             $table->unsignedBigInteger('hierarchy_id');
             $table->integer('grade_id');
-            $table->string('recomendation');
+            $table->text('recomendation');
             $table->timestamps();
 
             $table->foreign('performance_id')->references('id')->on('performances')->onDelete('cascade')->onUpdate('cascade');

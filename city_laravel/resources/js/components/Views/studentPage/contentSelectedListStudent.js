@@ -87,7 +87,7 @@ const ContentSelectedListStudent = (props) => {
                         nameItemClicked={props.nameItemClicked}
                     />
                 </Route>
-                <Redirect from={`${url}`} to={`${url}/inteligenciasmultiples`} />
+                <Redirect from={`${url}`} to={`${url}/resultadosporasignatura`} />
             </Switch>
             <ButtonGenerateInform
                 idForFetch={params.idForFetch}
@@ -98,6 +98,7 @@ const ContentSelectedListStudent = (props) => {
                 nameItemClicked={props.nameItemClicked}
                 routeFetchVocational={routeFetchVocational}
                 routerFetchSubject={routerFetchSubject}
+                isReportStudent={true}
             />
 
         </div>

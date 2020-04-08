@@ -76,7 +76,9 @@ const MultipleIntelligencesStudent = ({ idForFetch, showAllData, nameItemClicked
 
     async function fetchData() {
         try {
-            const result = await fetchApi(`http://127.0.0.1:8000/intelligences/${idForFetch}`)
+            // let result = await fetchApi(`http://127.0.0.1:8000/intelligences/${idForFetch}`)
+            let result = await fetchApi(`http://127.0.0.1:8000/intelligences/${idForFetch}`)
+            // isDataIntelligences(result)
             setJsonApi(result)
 
             const gamesPlayedInfo = await fetchApi(`http://127.0.0.1:8000/gamesPlayed/student/${idForFetch}/inteligencias`)
@@ -84,8 +86,34 @@ const MultipleIntelligencesStudent = ({ idForFetch, showAllData, nameItemClicked
 
             setisLoaded(false)
         } catch (error) {
+            console.log("TCL: fetchData -> error", error)
             setisLoaded(true)
             setError(error)
+        }
+    }
+
+    function isDataIntelligences(result) {
+        console.log("TCL: isDataIntelligences -> result.message and Object", result.message + '-' + Object.is(result, result))
+        if (result.message === undefined && Object.is(result, result)) {
+            console.log("TCL: isDataIntelligences -> result", result)
+            Object.keys(result).map(
+                (i) => {
+                    let grade = {
+                        name: `Grado ${i}`,
+                        intelligences: []
+                    }
+
+                    result[i].map(
+                        item => grade.intelligences.push({
+                            average: item.average, name: `${item.int_name.charAt(0).toUpperCase()}${item.int_name.slice(1)}`
+                        })
+                    )
+                    setJsonApi(jsonApi => [...jsonApi, grade])
+                    console.log("TCL: isDataIntelligences -> grade", grade)
+                }
+            )
+        } else {
+            setJsonApi([])
         }
     }
 
@@ -102,8 +130,16 @@ const MultipleIntelligencesStudent = ({ idForFetch, showAllData, nameItemClicked
 
                 <GroupCardsAverage titleCardTotalGames="Total de juegos" averageTotalGames={dataGamesPlayed.total_games} titleAverage="Promedio de juegos jugados" averageGamesPlayed={dataGamesPlayed.games_played} />
 
-
                 <CardGraph tabs={tabs} jsonApi={jsonApi} showAllData={showAllData} heightGraph={225} widthGraph={768} typeGraph='bar' />
+                {/* {
+                    jsonApi.length > 0 &&
+                    jsonApi.map(
+                        (item, i) =>
+                            <CardGraph key={i} titleCard={item.name} jsonApi={item.intelligences} showAllData={showAllData} heightGraph={225} widthGraph={768} typeGraph='bar' />
+                    )
+                } */}
+
+                {/* <CardGraph tabs={tabs} jsonApi={jsonApi} showAllData={showAllData} heightGraph={225} widthGraph={768} typeGraph='bar' /> */}
             </div>
         )
     }

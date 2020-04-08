@@ -23,3 +23,4 @@ Route::put('/saveRecords', 'Api\SaveRecords@save');
 
 Route::post('/simat', 'Api\Simat@save');
 
+Route::get('/trying/{id}', 'Api\UserInfo@getByRole');

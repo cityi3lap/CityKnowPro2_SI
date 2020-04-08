@@ -37,12 +37,12 @@ class PermissionTableSeeder extends Seeder
         $institutionPermission->save();
         $institutionPermission->roles()->attach($manager_role);
 
-        $headquaterPermission = new Permission();
-        $headquaterPermission->slug = 'headquaters';
-        $headquaterPermission->name = 'Sedes';
-        $headquaterPermission->desc = 'Mostrar página de sedes.';
-        $headquaterPermission->save();
-        $headquaterPermission->roles()->attach($manager_role);
+        $headquarterPermission = new Permission();
+        $headquarterPermission->slug = 'headquarters';
+        $headquarterPermission->name = 'Sedes';
+        $headquarterPermission->desc = 'Mostrar página de sedes.';
+        $headquarterPermission->save();
+        $headquarterPermission->roles()->attach($manager_role);
 
         $groupPermission = new Permission();
         $groupPermission->slug = 'hq_grades';

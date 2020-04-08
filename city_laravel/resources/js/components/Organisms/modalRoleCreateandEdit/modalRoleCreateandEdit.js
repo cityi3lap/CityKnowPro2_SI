@@ -76,13 +76,13 @@ const ModalRoleCreateandEdit = ({ idModal, title, textButton, roleData, urlFetch
                                     return (
                                         <Form>
                                             <div className="form-group">
-                                                <label htmlFor="name">Nombre del role</label>
-                                                <Field name="name" type="text" className={'form-control' + (errors.name && touched.name ? ' is-invalid' : '')} placeholder="Escribir el nombre del role" />
+                                                <label htmlFor="name">Nombre del rol</label>
+                                                <Field name="name" type="text" className={'form-control' + (errors.name && touched.name ? ' is-invalid' : '')} placeholder="Escribir el nombre del rol" />
                                                 <ErrorMessage name="name" component="div" className="invalid-feedback" />
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="desc">Descripción</label>
-                                                <Field name="desc" type="text" className={'form-control' + (errors.desc && touched.desc ? ' is-invalid' : '')} placeholder="Descrición breve del role" />
+                                                <Field name="desc" type="text" className={'form-control' + (errors.desc && touched.desc ? ' is-invalid' : '')} placeholder="Descrición breve del rol" />
                                                 <ErrorMessage name="desc" component="div" className="invalid-feedback" />
                                             </div>
                                             <div className="form-group">

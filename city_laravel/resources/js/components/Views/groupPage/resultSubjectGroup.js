@@ -8,7 +8,7 @@ import CardConvenciones from '../../Organisms/cardConvenciones/cardConvenciones'
 import GroupCardsAverage from '../../Organisms/groupCardsAverage/groupCardsAverage';
 
 
-const ResultSubjectGroup = ({ idForFetch, showAllData, limitsForyLabels , nameItemClicked }) => {
+const ResultSubjectGroup = ({ idForFetch, showAllData, limitsForyLabels, nameItemClicked }) => {
     const [isLoaded, setisLoaded] = useState(true);
     const [error, setError] = useState(null);
     const [jsonApi, setJsonApi] = useState([]);
@@ -102,8 +102,15 @@ const ResultSubjectGroup = ({ idForFetch, showAllData, limitsForyLabels , nameIt
                 <GroupCardsAverage titleCardTotalGames="Total de juegos" averageTotalGames={dataGamesPlayed.total_games} titleAverage="Promedio de juegos jugados" averageGamesPlayed={dataGamesPlayed.average} />
 
 
-                <CardGraph tabs={tabs} jsonApi={jsonApi} showAllData={showAllData} heightGraph={225} widthGraph={768} typeGraph='line' limitsForyLabels={limitsForyLabels} />
-                <CardConvenciones desc={desc} conventions={conventions} showDesc={false} />
+                <CardGraph
+                    tabs={tabs}
+                    jsonApi={jsonApi}
+                    showAllData={showAllData}
+                    heightGraph={225}
+                    widthGraph={768}
+                    // typeGraph='line'
+                    limitsForyLabels={limitsForyLabels} />
+                {/* <CardConvenciones desc={desc} conventions={conventions} showDesc={false} /> */}
             </div>
         )
     }

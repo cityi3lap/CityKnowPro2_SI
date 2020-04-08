@@ -11,7 +11,7 @@ export async function fetchApi(url) {
 export async function fetchPOST(url, dataJson, typeFetch) {
   let prueba;
   const contentMeta = getToken();
-
+console.log(url, dataJson);
   await fetch(url, {
     method: typeFetch, // or 'PUT'
     body: JSON.stringify(dataJson), // data can be `string` or {object}!
@@ -24,9 +24,27 @@ export async function fetchPOST(url, dataJson, typeFetch) {
       console.log("TCL: fetchPOST -> result", result)
       prueba = result.status;
       return prueba;
-}).then( prueba => { console.log(prueba); alert("La acción se realizo de manera correcta")})
+}).then( prueba => { return true})
 .catch((err) => { return err })
 
+}
+
+export async function fetchPost(url, dataJson) {
+  const contentMeta = getToken();
+  try {
+    let result = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(dataJson),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': contentMeta
+      }
+    })
+    return result.json();
+  } catch(err) {
+    console.log(err);
+  }
 }
 
 function getToken() {

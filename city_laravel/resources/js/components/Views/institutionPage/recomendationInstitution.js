@@ -31,8 +31,7 @@ const RecomendationInstitution = ({ idForFetch, nameItemClicked }) => {
 
     async function FetchSubject() {
         let subject = await fetchApi(`http://127.0.0.1:8000/recomendations/institution/${idForFetch}`)
-        console.log("TCL: FetchSubject -> subject", subject)
-        if (subject.message === undefined && Object.is(subject , subject)) {
+        if ((subject.length > 0 && Array.isArray(subject)) || (  !Array.isArray(subject)  && subject.message == undefined)) {
 
             Object.keys(subject).map(
                 i => {
@@ -41,14 +40,26 @@ const RecomendationInstitution = ({ idForFetch, nameItemClicked }) => {
                         subjects: []
                     }
                     subject[i].map(
-                        item =>
+                        item => {
+                            let auxAll_dbas = []
+
+                            item.all_dbas.map(
+                                dba => {
+                                    if (dba !== null) {
+                                        auxAll_dbas.push(dba)
+                                    }
+                                }
+                            )
                             grade.subjects.push(
                                 {
                                     name: item.subject_name,
                                     performance: item.performance,
-                                    recomendation: item.recomendation
+                                    recomendation: item.recomendation,
+                                    all_dbas: auxAll_dbas
+
                                 }
                             )
+                        }
                     )
                     setdataSubjects(dataSubjects => [...dataSubjects, grade])
                 }
@@ -61,7 +72,8 @@ const RecomendationInstitution = ({ idForFetch, nameItemClicked }) => {
                     {
                         name: 'No se tienen datos',
                         performance: 'No se tienen datos',
-                        recomendation: 'No se tienen datos'
+                        recomendation: 'No se tienen datos',
+                        all_dbas: []
                     }
                 ]
             }])

@@ -338,122 +338,193 @@ const PdfGenerateInform = forwardRef(({ jsonApiCompetitions, jsonApiIntelligence
             <div>
                 <ul className="nav justify-content-around nav-tabs" role="tablist">
                     <li className="nav-item">
-                        <a className="nav-link-conventions active" href="#intelligences" role="tab" data-toggle="tab" >Informe por Inteligencias múltiples, estilos y perfil vocacional</a>
+                        <a className="nav-link-conventions active  " href="#intelligences" role="tab" data-toggle="tab">Informe por Inteligencias múltiples, estilos y perfil vocacional</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link-conventions" href="#DBA" role="tab" data-toggle="tab">informe de DBA</a>
+                        <a className="nav-link-conventions " href="#informes1" role="tab" data-toggle="tab" >informe de asignaturas</a>
                     </li>
                 </ul>
                 <div className="tab-content" ref={ref}>
+                    <div role="tabpanel" className="tab-pane fade " id="informes1" >
+                        <div className="content-pdf p-5" >
+                            <div className='col'>
+                                <div className="row justify-content-around">
+                                    <div className="col-3">
+                                        <img src={'/img/Mesa_de_trabajo_1_1.png'} className="img-fluid" alt="Responsive image" />
+                                    </div>
+                                    <div className="col-9">
+                                        <img src={'/img/CaucaA.png'} className="img-fluid" alt="Responsive image" />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <TitlePdfInform title={`Informe de DBA`} />
+                            <SubTitleTextPdf text={`Informe de: ${name}`} />
+                            <TitlePdfInform title='Recomendaciones por asignaturas' />
+                            {
+                                jsonApiSubject.map(
+                                    (item, i) => <div key={i} className='content-text-of-inform'>
+                                        <TitleTextPdf text={item.name} />
+                                        {
+                                            item.subjects.map(
+                                                (subject, i) => <div key={i}>
+                                                    <SubTitleTextPdf text={subject.name} />
+                                                    <label>
+                                                        <strong>Rendimiento:  </strong>  {subject.performance}
+                                                    </label>
+                                                    <ParagraphTextPdf text={subject.recomendation} />
+                                                    {subject.all_dbas.length > 0
+                                                        &&
+                                                        <div>
+                                                            <ParagraphTextPdf text={"Estos son los DBA que se debe reforzar"} />
+
+                                                            <ul>
+                                                                <dl>
+                                                                    {
+                                                                        subject.all_dbas.map(
+
+                                                                            (text) => <dd>
+                                                                                {
+                                                                                    text !== null &&
+                                                                                    <li type="disc">
+                                                                                        <div className="list-pdf py-1" >{text}</div>
+                                                                                    </li>
+                                                                                }
+                                                                            </dd>
+                                                                        )
+                                                                    }
+                                                                </dl>
+                                                            </ul>
+                                                        </div>
+                                                    }
+                                                </div>
+
+                                            )
+                                        }
+                                    </div>
+                                )
+                            }
+                        </div>
+                    </div>
                     <div role="tabpanel" className="tab-pane fade in active show" id="intelligences" >
                         <div className="content-pdf p-5" >
-                            <div className='col12 '>
+                            <div className="row justify-content-around">
                                 <div className="col-3">
-                                    <img src={'../img/Mesa_de_trabajo_1_1.png'}
-                                        className="img-fluid img-inform">
-                                    </img>
+                                    <img src={'/img/Mesa_de_trabajo_1_1.png'} className="img-fluid" alt="Responsive image" />
+                                </div>
+                                <div className="col-5">
+                                    <img src={'/img/CaucaB.png'} className="img-fluid" alt="Responsive image" />
                                 </div>
                             </div>
-                            <TitlePdfInform title={`Informe por Inteligencias múltiples, estilos y perfil vocacional`} />
-                            <SubTitleTextPdf text={`Informe de: ${name}`} />
-                            <TitlePdfInform title='Inteligencias múltiples' />
+                            <div>
 
-                            <div className='d-flex justify-content-center'>
-                                <div className=' col-md-12'>
-                                    <Graphline jsonApi={jsonApiIntelligence} />
+                                <TitlePdfInform title={`Informe por Inteligencias múltiples, estilos y perfil vocacional`} />
+                                <SubTitleTextPdf text={`Informe de: ${name}`} />
+                                <TitlePdfInform title='Inteligencias múltiples' />
+
+                                <div className='d-flex justify-content-center'>
+                                    <div className=' col-md-12'>
+                                        <Graphline jsonApi={jsonApiIntelligence} />
+                                    </div>
                                 </div>
-                            </div>
-                            {isDataIntelligences &&
-                                InformationmultipleIntelligences.map(
-                                    (item, i) => {
-                                        if (
-                                            jsonApiIntelligence.find(
-                                                recomendation => recomendation.name === item.name
-                                            ) !== undefined
-                                        ) {
-                                            return (
-                                                <div key={i} className='content-text-of-inform'>
-                                                    <TitleTextPdf text={item.title} />
-                                                    <ParagraphTextPdf text={item.desc} />
-                                                    <SubTitleTextPdf text={item.subtitlePredominio} />
-                                                    <ParagraphTextPdf text={item.descPredominio} />
-                                                    <SubTitleTextPdf text={item.subtitleRecomendation} />
-                                                    <ParagraphTextPdf text={item.recomendation} />
+                                {isDataIntelligences &&
+                                    InformationmultipleIntelligences.map(
+                                        (item, i) => {
+                                            if (
+                                                jsonApiIntelligence.find(
+                                                    recomendation => recomendation.name === item.name
+                                                ) !== undefined
+                                            ) {
+                                                return (
+                                                    <div key={i} className='content-text-of-inform'>
+                                                        <TitleTextPdf text={item.title} />
+                                                        <ParagraphTextPdf text={item.desc} />
+                                                        <SubTitleTextPdf text={item.subtitlePredominio} />
+                                                        <ParagraphTextPdf text={item.descPredominio} />
+                                                        <SubTitleTextPdf text={item.subtitleRecomendation} />
+                                                        <ParagraphTextPdf text={item.recomendation} />
 
-                                                </div>
-                                            )
+                                                    </div>
+                                                )
+                                            }
                                         }
-                                    }
 
-                                )
-                            }
-
-                            <TitlePdfInform title='Estilos de aprendizaje' />
-                            <div className='d-flex justify-content-center'>
-                                <div className=' col-md-12'>
-                                    <Graphline jsonApi={jsonApiStyles} />
-                                </div>
+                                    )
+                                }
                             </div>
-                            {isDataStyles &&
-                                InformationLearningStyles.map(
-                                    (item, i) => {
-                                        if (
-                                            jsonApiStyles.find(
-                                                recomendation => recomendation.name === item.name
-                                            ) !== undefined
-                                        ) {
-                                            return (
-                                                <div key={i} className='content-text-of-inform'>
-                                                    <TitleTextPdf text={item.title} />
-                                                    <ParagraphTextPdf text={item.desc} />
-                                                    <SubTitleTextPdf text={"Características"} />
-                                                    <ul>
-                                                        <dl>
-                                                            {
-                                                                item.feature.map(
+                            <div className="breakPagePdf">
+                                <TitlePdfInform title='Estilos de aprendizaje' />
+                                <SubTitleTextPdf text={`Informe de: ${name}`} />
 
-                                                                    (text) => <dd>
-                                                                        <li type="disc">
-                                                                            <div className="list-pdf py-1" >{text}</div>
-                                                                        </li>
-                                                                    </dd>
-                                                                )
-                                                            }
-                                                        </dl>
-                                                    </ul>
-                                                    <SubTitleTextPdf text={item.subtitleMetodology} />
-                                                    {
-                                                        item.preferenMetodology.map(
+                                <div className='d-flex justify-content-center'>
+                                    <div className=' col-md-12'>
+                                        <Graphline jsonApi={jsonApiStyles} />
+                                    </div>
+                                </div>
+                                {isDataStyles &&
+                                    InformationLearningStyles.map(
+                                        (item, i) => {
+                                            if (
+                                                jsonApiStyles.find(
+                                                    recomendation => recomendation.name === item.name
+                                                ) !== undefined
+                                            ) {
+                                                return (
+                                                    <div key={i} className='content-text-of-inform'>
+                                                        <TitleTextPdf text={item.title} />
+                                                        <ParagraphTextPdf text={item.desc} />
+                                                        <SubTitleTextPdf text={"Características"} />
+                                                        <ul>
+                                                            <dl>
+                                                                {
+                                                                    item.feature.map(
 
-                                                            (text) =>
-                                                                <ParagraphTextPdf text={text} />
-                                                        )
-                                                    }
-                                                    <SubTitleTextPdf text={item.subtitledificult} />
-                                                    <ul>
-                                                        <dl>
-                                                            {
-                                                                item.dificult.map(
+                                                                        (text, i) => <dd key={i}>
+                                                                            <li type="disc">
+                                                                                <div className="list-pdf py-1" >{text}</div>
+                                                                            </li>
+                                                                        </dd>
+                                                                    )
+                                                                }
+                                                            </dl>
+                                                        </ul>
+                                                        <SubTitleTextPdf text={item.subtitleMetodology} />
+                                                        {
+                                                            item.preferenMetodology.map(
 
-                                                                    (text) => <dd>
-                                                                        <li type="disc">
-                                                                            <div className="list-pdf py-1" >{text}</div>
-                                                                        </li>
-                                                                    </dd>
-                                                                )
-                                                            }
-                                                        </dl>
-                                                    </ul>
-                                                </div>
-                                            )
+                                                                (text, i) =>
+                                                                    <ParagraphTextPdf key={i} text={text} />
+                                                            )
+                                                        }
+                                                        <SubTitleTextPdf text={item.subtitledificult} />
+                                                        <ul>
+                                                            <dl>
+                                                                {
+                                                                    item.dificult.map(
+
+                                                                        (text, i) => <dd key={i}>
+                                                                            <li type="disc">
+                                                                                <div className="list-pdf py-1" >{text}</div>
+                                                                            </li>
+                                                                        </dd>
+                                                                    )
+                                                                }
+                                                            </dl>
+                                                        </ul>
+                                                    </div>
+                                                )
+                                            }
                                         }
-                                    }
-                                )
-                            }
+                                    )
+                                }
+
+                            </div>
                             {
                                 jsonApiVocation.length > 0 &&
-                                <div>
+                                <div className="breakPagePdf"  >
                                     <TitlePdfInform title='Perfiles de orientación vocacional' />
+                                    <SubTitleTextPdf text={`Informe de: ${name}`} />
+
 
                                     {profiles.map(
                                         (item, i) =>
@@ -469,7 +540,7 @@ const PdfGenerateInform = forwardRef(({ jsonApiCompetitions, jsonApiIntelligence
                                                                 {
                                                                     item.list.map(
 
-                                                                        (text) => <dd>
+                                                                        (text, i) => <dd key={i}>
                                                                             <li type="disc">
                                                                                 <div className="list-pdf py-1" >{text}</div>
                                                                             </li>
@@ -512,48 +583,9 @@ const PdfGenerateInform = forwardRef(({ jsonApiCompetitions, jsonApiIntelligence
                             } */}
 
                         </div>
-
-                    </div>
-                    <div role="tabpanel" className="tab-pane fade" id="DBA" >
-                        <div role="tabpanel" className="tab-pane fade in active show" id="intelligences">
-                            <div className="content-pdf p-5" >
-                                <div className='col12 '>
-                                    <div className="col-3">
-                                        <img src={'../img/Mesa_de_trabajo_1_1.png'}
-                                            className="img-fluid img-inform">
-                                        </img>
-                                    </div>
-                                </div>
-                                <TitlePdfInform title={`Informe de DBA`} />
-                                <SubTitleTextPdf text={`Informe de: ${name}`} />
-                                <TitlePdfInform title='Recomendaciones por asignaturas' />
-                                {
-                                    jsonApiSubject.map(
-                                        (item, i) => <div key={i} className='content-text-of-inform'>
-                                            <TitleTextPdf text={item.name} />
-                                            {
-                                                item.subjects.map(
-                                                    (subject, i) => <div key={i}>
-                                                        <SubTitleTextPdf text={subject.name} />
-                                                        <label>
-                                                            <strong>Rendimiento:  </strong>  {subject.performance}
-                                                        </label>
-                                                        <ParagraphTextPdf text={subject.recomendation} />
-                                                        <div>
-
-                                                        </div>
-                                                    </div>
-
-                                                )
-                                            }
-                                        </div>
-                                    )
-                                }
-                            </div>
-                        </div>
                     </div>
                 </div>
-            </div >
+            </div>
 
         )
     }

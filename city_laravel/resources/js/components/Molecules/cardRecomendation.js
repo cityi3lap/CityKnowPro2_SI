@@ -3,7 +3,7 @@ import React from 'react'
 const CardRecomendation = ({ dataInfo, title, idCard, show, idHeader, expander, infoRecomendation, isSubject }) => {
 
     return (
-        <div className="card-faq card">
+        <div className="card-faq cardRecomendation card">
             <button
                 className="btn-faq btn"
                 data-toggle="collapse"
@@ -17,7 +17,7 @@ const CardRecomendation = ({ dataInfo, title, idCard, show, idHeader, expander, 
                 </div>
             </button>
 
-            <div id={idCard} className={`collapse ${show}`} aria-labelledby={idHeader} data-parent="#accordion">
+            <div id={idCard} className={`collapse ${show} px-3`} aria-labelledby={idHeader} data-parent="#accordion">
                 <div className="card-body">
                     {isSubject &&
                         dataInfo.map(
@@ -34,18 +34,48 @@ const CardRecomendation = ({ dataInfo, title, idCard, show, idHeader, expander, 
                                                 <div key={i}>
                                                     <div>
                                                         <div className="subtitle-text-pdf">
-                                                            <label>
+                                                            <h5>
                                                                 <strong> {subject.name.charAt(0).toUpperCase() + subject.name.slice(1)} </strong>
-                                                            </label>
+                                                            </h5>
                                                         </div>
                                                         <label>
                                                             <strong>Rendimiento:  </strong>  {subject.performance}
                                                         </label>
                                                         <div>
+                                                            <div className="subtitle-text-pdf py-2">
+                                                                Recomendaciones
+                                                            </div>
                                                             <label>
                                                                 {subject.recomendation}
                                                             </label>
                                                         </div>
+                                                        {
+                                                            subject.all_dbas.length > 0 &&
+                                                            <div>
+                                                                <label>
+                                                                    Estos son los DBA que se debe reforzar
+                                                            </label>
+                                                                <ul>
+                                                                    <dl>
+                                                                        {
+                                                                            subject.all_dbas.map(
+
+                                                                                (text, i) =>
+
+                                                                                    <dd key={i}>
+                                                                                        {
+                                                                                            text != null &&
+                                                                                            <li type="disc">
+                                                                                                <div className="list-pdf py-1" >{text}</div>
+                                                                                            </li>
+                                                                                        }
+                                                                                    </dd>
+                                                                            )
+                                                                        }
+                                                                    </dl>
+                                                                </ul>
+                                                            </div>
+                                                        }
                                                     </div>
                                                 </div>
                                             }
@@ -69,7 +99,7 @@ const CardRecomendation = ({ dataInfo, title, idCard, show, idHeader, expander, 
                                     </label>
                                 </div>
                                 <div>
-                                    <div className="subtitle-text-pdf">
+                                    <div className="subtitle-text-pdf py-2">
                                         Recomendaciones
                                     </div>
                                     {

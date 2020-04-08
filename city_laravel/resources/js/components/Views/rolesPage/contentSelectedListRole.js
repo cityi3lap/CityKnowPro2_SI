@@ -53,7 +53,6 @@ const ContentSelectedListRole = ({ infoPermissions }) => {
 
     function addOptionCheckedIntoPermissions(result) {
         let auxAllPermission = permissions;
-        // console.log("TCL: addOptionCheckedIntoPermissions -> result", result)
         auxAllPermission.map(
             item => {
                 let permission = result.permissions.find(permission =>
@@ -69,7 +68,6 @@ const ContentSelectedListRole = ({ infoPermissions }) => {
 
         setinitialPermissions(auxAllPermission)
         setpermissions(auxAllPermission)
-        // console.log("TCL: addOptionCheckedIntoPermissions -> auxAllPermission", auxAllPermission)
     }
 
     function handleClickEdit() {
@@ -106,7 +104,7 @@ const ContentSelectedListRole = ({ infoPermissions }) => {
                             </div>
                         }
                         {/* <ModalRoleCreateandEdit idModal={"ModalEditRole"} title={'Editar Role'} textButton={'Guardar cambios'} roleData={jsonApi} urlFetch={`http://127.0.0.1:8000/updateRole/${jsonApi.id}`} permissions={permissions} typeFetch={'PUT'} addExtentionIdChecked={'Edit'} /> */}
-                        <ModalDelete modalId={'ModalDelete'} title={'Eliminar Role'} textBody={'Seguro quiere eliminar este role'} urlFetch={'http://127.0.0.1:8000/deleteRole'} element={jsonApi} />
+                        <ModalDelete modalId={'ModalDelete'} title={'Eliminar rol'} textBody={'Seguro quiere eliminar este Rol'} urlFetch={'http://127.0.0.1:8000/deleteRole'} element={jsonApi} />
                     </div>
 
                     <Formik
@@ -114,7 +112,7 @@ const ContentSelectedListRole = ({ infoPermissions }) => {
                         enableReinitialize={true}
                         validationSchema={Yup.object().shape({
                             name: Yup.string().max(45, 'El nombre debe ser maximo de 45 caracteres')
-                                .required('El nombre del role es obligatorio'),
+                                .required('El nombre del rol es obligatorio'),
                             desc: Yup.string().max(45, 'La descripción debe ser maximo de 45 caracteres')
                                 .required('La descripción es obligatoria'),
 
@@ -132,12 +130,10 @@ const ContentSelectedListRole = ({ infoPermissions }) => {
                             )
 
 
-                            console.log("TCL: ContentSelectedListRole -> a", a)
 
                             async function fetchPOSTDATA() {
                                 try {
                                     const data = await fetchPOST(`${urlFetch}`, a, "PUT")
-                                    console.log("TCL: fetchPOSTDATA -> data", data)
                                 } catch (error) {
                                     console.warn(error)
                                 }
@@ -159,7 +155,6 @@ const ContentSelectedListRole = ({ infoPermissions }) => {
 
 
                             function getPermissions(e) {
-                                console.log("TCL: getPermissions -> e", e)
                                 if (e.length > 0) {
                                     let auxJsonApi = jsonApi
                                     auxJsonApi.permissions = e
@@ -173,13 +168,13 @@ const ContentSelectedListRole = ({ infoPermissions }) => {
                             return (
                                 <Form>
                                     <div className="form-group">
-                                        <label htmlFor="name">Nombre del role</label>
-                                        <Field name="name" type="text" className={'form-control' + (errors.name && touched.name ? ' is-invalid' : '')} placeholder="Escribir el nombre del role" disabled={isDisabled} />
+                                        <label htmlFor="name">Nombre del rol</label>
+                                        <Field name="name" type="text" className={'form-control' + (errors.name && touched.name ? ' is-invalid' : '')} placeholder="Escribir el nombre del rol" disabled={isDisabled} />
                                         <ErrorMessage name="name" component="div" className="invalid-feedback" />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="desc">Descripción</label>
-                                        <Field name="desc" type="text" className={'form-control' + (errors.desc && touched.desc ? ' is-invalid' : '')} placeholder="Descrición breve del role" disabled={isDisabled} />
+                                        <Field name="desc" type="text" className={'form-control' + (errors.desc && touched.desc ? ' is-invalid' : '')} placeholder="Descrición breve del rol" disabled={isDisabled} />
                                         <ErrorMessage name="desc" component="div" className="invalid-feedback" />
                                     </div>
                                     <div className="form-group">
@@ -191,7 +186,6 @@ const ContentSelectedListRole = ({ infoPermissions }) => {
                                             checkedButtons={getPermissions}
                                             isDisabled={isDisabled}
                                             Action={'Edit'}
-                                            initialCheckbox={initialPermissions}
                                             isCancel={isCancel}
                                             isCreate={false}
                                             changeStateCancel={changeStateCancel} />

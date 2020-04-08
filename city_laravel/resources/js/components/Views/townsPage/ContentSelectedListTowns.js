@@ -56,7 +56,7 @@ const ContentSelectedListTowns = (props) => {
                 <Route path={`${url}/recomendaciones`}>
                     <RecomendationTowns idForFetch={params.idForFetch} nameItemClicked={props.nameItemClicked} />
                 </Route>
-                <Redirect from={`${url}`} to={`${url}/inteligenciasmultiples`} />
+                <Redirect from={`${url}`} to={`${url}/resultadosporasignatura`} />
             </Switch>
 
             <ButtonGenerateInform

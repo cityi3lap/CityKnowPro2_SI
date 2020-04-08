@@ -5,7 +5,7 @@ import ListResult from '../../Molecules/listResult';
 
 import LoadingPage from '../../Views/loadingPage/loadingPage'
 
-import { fetchApi } from '../../../function/GlobalFunctions';
+import { fetchPost } from '../../../function/GlobalFunctions';
 
 const ListSearch = (props) => {
     const [isHovering, setIsHovering] = useState(false)
@@ -14,7 +14,6 @@ const ListSearch = (props) => {
     const [textForFilter, setTextForFilter] = useState("")
 
     const [heighComponent, setheighComponent] = useState(0)
-
 
     useEffect(() => {
         setheighComponent(document.getElementById('listSearch').getBoundingClientRect().height)
@@ -37,7 +36,23 @@ const ListSearch = (props) => {
         textForFilter: ''
     }
 
-
+    async function fetchGrades() {
+        let jsonToPost = {headquarters: props.headquarters_hq};
+        try {
+            let infoGrades = await fetchPost(`http://127.0.0.1:8000/infoUser/grades`, jsonToPost);
+            let dataToList = [];
+            props.headquarters_hq.map(element => {
+                infoGrades.hq_grades.map(grade => {
+                    let toPush = {id: `${element.id}-${grade.id}`, name: `${element.name} - ${grade.name}`};
+                    dataToList.push(toPush);
+                });
+            })
+            setItemsForListResult(dataToList);
+            console.log(state.infoForSelectList)
+        } catch (error) {
+            console.warn(error);
+        }
+    }
 
     useEffect(() => {
         getElementsofData()
@@ -49,10 +64,10 @@ const ListSearch = (props) => {
             response => items.push(response)
         )
         setItemsForListResult(items)
+        fetchGrades()
         setIsLoaded(false)
         state.itemsgetvalues = false
         // setState({ items, loading: false, itemsgetvalues: false });
-
     }
 
     // recive props to son component
@@ -64,7 +79,10 @@ const ListSearch = (props) => {
         return (
             <div>
                 <div>
-                    <InputSearch placeHolder={state.placeHolder} onChange={getPropsFromInputSearch} />
+                    {props.headquarters ?
+                        <InputSearch placeHolder={state.placeHolder} onSearch={getPropsFromInputSearch}/> :
+                        <InputSearch placeHolder={state.placeHolder} onChange={getPropsFromInputSearch} />
+                    }
                 </div>
 
             </div>
@@ -72,10 +90,12 @@ const ListSearch = (props) => {
     }
 
     function isData() {
+        let headquarters = props.headquarters || undefined;
+        let headquarters_hq = props.headquarters_hq || undefined;
         return (
             <div>
                 <ListResult items={itemsForListResult} textForFilter={textForFilter} heighComponent={heighComponent} handleMouseHover={handleMouseHover} handleClickItem={handleClick}
-
+                    headquarters={headquarters}
                 />
             </div>
         )
@@ -86,7 +106,6 @@ const ListSearch = (props) => {
     }
 
     function handleClick(e) {
-        console.log("TCL: handleClick -> e", e)
         props.getNameItemClicked(e)
 
     }

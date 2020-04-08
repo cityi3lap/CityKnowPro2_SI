@@ -11,15 +11,15 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('auth.login');
-// });
+ Route::get('/', function () {
+     return view('auth.login');
+ });
 
 
-Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+//Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
 // Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 // Route::post('login', 'Auth\LoginController@login');
-Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('/logout', 'Auth\LoginController@logout');
 
 // Registration Routes...
 if ($options['register'] ?? true) {
@@ -39,7 +39,7 @@ if ($options['verify'] ?? false) {
 
 Auth::routes();
 
-Route::get('home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 // Route::get('si/{path?}', 'HomeController@index')->name('home');
 // Route::get('si/{path?}', 'HomeController@index')->name('home');
@@ -47,7 +47,7 @@ Route::get('home', 'HomeController@index')->name('home');
 
 // Route::view('/{path?}', 'home');
 
-Route::get('city/{path?}', function () {
+Route::get('/city/si/{path?}', function () {
     return view('home'); // or wherever your React app is bootstrapped.
 })->where('path', '.*');
 
@@ -81,6 +81,8 @@ Route::delete('/deleteRole/{id}', 'RoleController@destroyRole');
 Route::get('/try-redis', 'RedisController@index');
 
 Route::get('/infoUser/{id}', 'Api\UserInfo@getByRole');
+Route::post('/infoUser/students', 'Api\UserInfo@getStudentsByRole');
+Route::post('/infoUser/grades', 'Api\UserInfo@getGradesByRole');
 
 // Intelligences by competence
 Route::get('/competences/intelligences/headquarter/{id}', 'Api\GetByHeadquarter@getIntelligencesByCompetence');

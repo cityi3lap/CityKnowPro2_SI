@@ -56,7 +56,7 @@ const ContentSelectedListHeadquater = (props) => {
                 <Route path={`${url}/recomendaciones`}>
                     <RecomendationHeadquater idForFetch={params.idForFetch} nameItemClicked={props.nameItemClicked} />
                 </Route>
-                <Redirect from={`${url}`} to={`${url}/inteligenciasmultiples`} />
+                <Redirect from={`${url}`} to={`${url}/resultadosporasignatura`} />
             </Switch>
             <ButtonGenerateInform
                 idForFetch={params.idForFetch}

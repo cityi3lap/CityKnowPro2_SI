@@ -19,6 +19,9 @@ const ModalFloatButtons = ({ idModal, title, textButton, userData, roles, urlFet
 
     const [locationUsers, setlocatinoUsers] = useState()
 
+
+    const [LocationUserGrades, setuserHerarquyGrades] = useState([])
+
     const [isRoleAndPermissionSelected, setIsRoleAndPermissionSelected] = useState(false)
 
     const [checkedBox, setcheckedBox] = useState([])
@@ -103,7 +106,7 @@ const ModalFloatButtons = ({ idModal, title, textButton, userData, roles, urlFet
                                     validationSchema={validationSchema}
 
                                     onSubmit={fields => {
-                                        
+
 
                                         async function fetchPOSTDATA() {
                                             console.log("TCL: ModalFloatButtons -> fields", fields)
@@ -114,8 +117,23 @@ const ModalFloatButtons = ({ idModal, title, textButton, userData, roles, urlFet
                                             }
                                         }
 
-                                        fields.destiny_ids = [...checkedBox]
                                         fields.role = Number.parseInt(roleSelect);
+
+                                        if (slug_Permission == "hq_grades") {
+                                            let auxLocationUserGrade = []
+                                            checkedBox.map(
+                                                item => {
+                                                    let idGrade = item.split("-")
+                                                    auxLocationUserGrade.push(idGrade[0], idGrade[1])
+                                                }
+                                            )
+                                            setuserHerarquyGrades(auxLocationUserGrade)
+                                            console.log("TCL: ModalFloatButtons -> auxLocationUserGrade", auxLocationUserGrade)
+                                            fields.destiny_ids = [...auxLocationUserGrade]
+                                        } else {
+                                            fields.destiny_ids = [...checkedBox]
+                                        }
+
                                         fetchPOSTDATA()
 
                                     }}
@@ -139,9 +157,18 @@ const ModalFloatButtons = ({ idModal, title, textButton, userData, roles, urlFet
                                             // console.log("TCL: functiongetIdandSlug_Permission -> slug_perrmissionCheck", slug_perrmissionCheck)
                                         }
 
-                                        function getIdChecked(idsCheckedButtons) {
+                                        function getIdChecked(idsCheckedButtons, existValue) {
                                             console.log("TCL: getIdChecked -> idsCheckedButtons", idsCheckedButtons)
-                                            setcheckedBox([...idsCheckedButtons])
+                                            if (existValue) {
+                                                setcheckedBox(checkedBox => [...checkedBox, idsCheckedButtons])
+                                            } else {
+                                                let auxCheckedBox = [...checkedBox]
+                                                let index = auxCheckedBox.indexOf(idsCheckedButtons)
+                                                let spliceCheckbox = auxCheckedBox.splice(index, 1)
+
+                                                setcheckedBox(auxCheckedBox)
+                                            }
+
                                         }
 
                                         return (
@@ -195,7 +222,6 @@ const ModalFloatButtons = ({ idModal, title, textButton, userData, roles, urlFet
                                                     locationUsers={locationUsers}
                                                     checkedBox={checkedBox}
                                                     getIdChecked={getIdChecked}
-                                                    Action={"create"}
                                                 />
 
                                                 <div className="form-group">

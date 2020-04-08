@@ -200,18 +200,9 @@ class UserInfo extends Controller
             $row_id = $location->destiny_hierarchy_id;
 
             if ($table_name !== 'grades') {
-                // $open_location = config('env_vars.open_location_url');
+                $open_location = config('env_vars.open_location_url');
                 $open_location = 'http://'.$_SERVER['SERVER_ADDR'].':8088/city/ol/';
                 $info_from_location = json_decode(file_get_contents($open_location.'api/'.$table_name.'/'.$row_id));
-
-                // Get info about the grades, they are the same always
-                // $grades_info = DB::table('grades')
-                //                 ->select('id', 'name')
-                //                 ->get();
-                // foreach ($grades_info as $key => $grade) {
-                //     $to_push_grade = (object) array('id' => $grade->id, 'name' => $grade->name);
-                //     array_push($grades_array, $to_push_grade);
-                // }
             } else {
                 $ids_info = DB::table('user_hierarchies AS uh')
                                 ->join('users AS us', 'us.id', '=', 'uh.user_id')
@@ -228,104 +219,160 @@ class UserInfo extends Controller
                     foreach ($array_to_push as $key => $value) {
                         array_push($game_users, $value);
                     }
-                    // $open_location = config('env_vars.open_location_url');
+                    $grade_db = DB::table('grades')
+                                    ->select('name')
+                                    ->where('id', $ids_array[1])
+                                    ->get();
+
+                    $open_location = config('env_vars.open_location_url');
                     $open_location = 'http://'.$_SERVER['SERVER_ADDR'].':8088/city/ol/';
                     $info_from_location = json_decode(file_get_contents($open_location.'api/headquarters/'.$ids_array[0]));
-                    $hq_grade_to_push = (object) array('id' => $info_from_location->id, 'name' => $info_from_location->name.' - '.$array_to_push[0]->grade_name);
+                    $hq_grade_to_push = (object) array('id' => $info_from_location->id, 'name' => $info_from_location->name.' - '.$grade_db[0]->name);
                     array_push($hq_grades, $hq_grade_to_push);
                 }
                 $hq_grades = $this->unique_array_by_id($hq_grades);
                 $game_users = array_values($this->unique_array_by_id($game_users));
             }
 
-            if ($table_name == 'departments') {
-                $to_push_first_level = (object) array('id' => $info_from_location->id, 
-                                                    'name' => $info_from_location->name);
-                array_push($departments_array, $to_push_first_level);
-                foreach ($info_from_location->towns as $key => $town) {
-                    $to_push_town_ = (object) array('id' => $town->id, 'name' => $town->name, 
-                                                    'department_id' => $town->department_id);
-                    array_push($towns_array, $to_push_town_);
-                    foreach ($town->headquarters as $key => $headquarter) {
+            if ($location_info->count()) {
+                if ($table_name == 'departments') {
+                    $to_push_first_level = (object) array('id' => $info_from_location->id, 
+                                                        'name' => $info_from_location->name);
+                    array_push($departments_array, $to_push_first_level);
+                    foreach ($info_from_location->towns as $key => $town) {
+                        $to_push_town_ = (object) array('id' => $town->id, 'name' => $town->name, 
+                                                        'department_id' => $town->department_id);
+                        array_push($towns_array, $to_push_town_);
+                        foreach ($town->headquarters as $key => $headquarter) {
+                            $to_push_headquarter = (object) array('id' => $headquarter->id, 
+                                                                'name' => $headquarter->name, 
+                                                                'department_id' => $town->department_id,
+                                                                'town_id'=> $town->id,
+                                                                'institution_id'=> $headquarter->institution_id);
+                            $inst = $headquarter->institution;
+                            $inst_to_add = (object) array('id'=>$inst->id, 'name'=>$inst->name);
+                            array_push($headquarters_array, $to_push_headquarter);
+                            array_push($institutions_array, $inst_to_add);
+                        }
+                    }
+                } else if ($table_name == 'towns') {
+                    $to_push_first_level = (object) array('id' => $info_from_location->id, 
+                                                        'name' => $info_from_location->name,
+                                                        'department_id' => $info_from_location->department_id);
+                    array_push($towns_array, $to_push_first_level);
+                    foreach ($info_from_location->headquarters as $key => $headquarter) {
                         $to_push_headquarter = (object) array('id' => $headquarter->id, 
-                                                            'name' => $headquarter->name, 
-                                                            'department_id' => $town->department_id,
-                                                            'town_id'=> $town->id,
-                                                            'institution_id'=> $headquarter->institution_id);
-                        $inst = $headquarter->institution;
-                        $inst_to_add = (object) array('id'=>$inst->id, 'name'=>$inst->name);
+                                                            'name' => $headquarter->name,
+                                                            'department_id' => $info_from_location->department_id,
+                                                            'town_id' => $headquarter->town_id,
+                                                            'institution_id' => $headquarter->institution_id);
                         array_push($headquarters_array, $to_push_headquarter);
+                        $inst = $headquarter->institution;
+                        $inst_to_add = (object) array('id' => $inst->id, 'name' => $inst->name);
                         array_push($institutions_array, $inst_to_add);
                     }
-                }
-            } else if ($table_name == 'towns') {
-                $to_push_first_level = (object) array('id' => $info_from_location->id, 
-                                                    'name' => $info_from_location->name,
-                                                    'department_id' => $info_from_location->department_id);
-                array_push($towns_array, $to_push_first_level);
-                foreach ($info_from_location->headquarters as $key => $headquarter) {
-                    $to_push_headquarter = (object) array('id' => $headquarter->id, 
-                                                        'name' => $headquarter->name,
-                                                        'department_id' => $info_from_location->department_id,
-                                                        'town_id' => $headquarter->town_id,
-                                                        'institution_id' => $headquarter->institution_id);
-                    array_push($headquarters_array, $to_push_headquarter);
-                    $inst = $headquarter->institution;
-                    $inst_to_add = (object) array('id' => $inst->id, 'name' => $inst->name);
-                    array_push($institutions_array, $inst_to_add);
-                }
-            } else if ($table_name == 'institutions') {
-                $to_push_first_level = (object) array('id' => $info_from_location->id,
-                                                    'name' => $info_from_location->name);
-                array_push($institutions_array, $to_push_first_level);
-                foreach ($info_from_location->headquarters as $key => $headquarter) {
+                } else if ($table_name == 'institutions') {
+                    $to_push_first_level = (object) array('id' => $info_from_location->id,
+                                                        'name' => $info_from_location->name);
+                    array_push($institutions_array, $to_push_first_level);
+                    foreach ($info_from_location->headquarters as $key => $headquarter) {
+                        $to_push_headquarter = (object) array('id' => $headquarter->id,
+                                                            'name' => $headquarter->name,
+                                                            'department_id' => $headquarter->town->department_id,
+                                                            'town_id' => $headquarter->town_id,
+                                                            'institution_id' => $headquarter->institution_id);
+                        array_push($headquarters_array, $to_push_headquarter);
+                    }
+                } else if ($table_name == 'headquarters') {
+                    $headquarter = $info_from_location;
                     $to_push_headquarter = (object) array('id' => $headquarter->id,
                                                         'name' => $headquarter->name,
                                                         'department_id' => $headquarter->town->department_id,
                                                         'town_id' => $headquarter->town_id,
-                                                        'institution_id' => $headquarter->institution_id);
+                                                        'institution_id' => $headquarter->institution->id);
                     array_push($headquarters_array, $to_push_headquarter);
                 }
-            } else if ($table_name == 'headquarters') {
-                $headquarter = $info_from_location;
-                $to_push_headquarter = (object) array('id' => $headquarter->id,
-                                                    'name' => $headquarter->name,
-                                                    'department_id' => $headquarter->town->department_id,
-                                                    'town_id' => $headquarter->town_id,
-                                                    'institution_id' => $headquarter->institution->id);
-                array_push($headquarters_array, $to_push_headquarter);
             }
         }
         $institutions_array = $this->unique_array_by_id($institutions_array);
 
-        foreach ($headquarters_array as $key => $hq) {
-            $info_hq_grade = DB::table('grades')
-                                ->join('game_users AS gu', 'gu.grade_id', '=', 'grades.id')
-                                ->select('grades.id', 'grades.name', 'gu.username', 'gu.id AS userId', 'gu.first_name', 'gu.second_name', 'gu.first_surname', 'gu.second_surname')
-                                ->where('gu.headquarter_id', $hq->id)
-                                ->get();
+        // foreach ($headquarters_array as $key => $hq) {
+        //     $info_hq_grade = DB::table('grades')
+        //                         ->join('game_users AS gu', 'gu.grade_id', '=', 'grades.id')
+        //                         ->select('grades.id', 'grades.name', 'gu.username', 'gu.id AS userId', 'gu.first_name', 'gu.second_name', 'gu.first_surname', 'gu.second_surname')
+        //                         ->where('gu.headquarter_id', $hq->id)
+        //                         ->get();
 
-            foreach ($info_hq_grade as $key => $hq_g) {
-                $hq_grade_to_push = (object) array('id' => $hq->id.'-'.$hq_g->id,
-                                                    'name' => $hq->name.' - '.$hq_g->name);
-                array_push($hq_grades, $hq_grade_to_push);
+        //     foreach ($info_hq_grade as $key => $hq_g) {
+        //         $hq_grade_to_push = (object) array('id' => $hq->id.'-'.$hq_g->id,
+        //                                             'name' => $hq->name.' - '.$hq_g->name);
+        //         array_push($hq_grades, $hq_grade_to_push);
 
-                $n1 = $hq_g->first_name ?? '';
-                $n2 = $hq_g->second_name ?? '';
-                $s1 = $hq_g->first_surname ?? '';
-                $s2 = $hq_g->second_surname ?? '';
-                $full_name = $n1.' '.$n2.' '.$s1.' '.$s2;
-                $game_user_to_push = (object) array('id' => $hq_g->userId, 'name' => $full_name);
-                array_push($game_users, $game_user_to_push);
-            }
-            $hq_grades = $this->unique_array_by_id($hq_grades);
-        }
+        //         $n1 = $hq_g->first_name ?? '';
+        //         $n2 = $hq_g->second_name ?? '';
+        //         $s1 = $hq_g->first_surname ?? '';
+        //         $s2 = $hq_g->second_surname ?? '';
+        //         $full_name = $n1.' '.$n2.' '.$s1.' '.$s2;
+        //         $game_user_to_push = (object) array('id' => $hq_g->userId, 'name' => $full_name);
+        //         array_push($game_users, $game_user_to_push);
+        //     }
+        //     $hq_grades = $this->unique_array_by_id($hq_grades);
+        // }
 
+        usort($towns_array, function($a, $b) { return strtolower($a->name) > strtolower($b->name); });
+        usort($institutions_array, function($a, $b) { return strtolower($a->name) > strtolower($b->name); });
+        usort($headquarters_array, function($a, $b) { return strtolower($a->name) > strtolower($b->name); });
         $final_array = array('departments'=>$departments_array, 'towns'=>$towns_array,
                             'institutions'=>$institutions_array, 'headquarters'=>$headquarters_array, 
                             'hq_grades'=>$hq_grades, 'game_users'=>$game_users, 'users'=>$users,
                             'roles'=>$roles, 'permissions'=>$permissions, 'user_permissions'=>$user_permission);
         return $final_array;
+    }
+
+    protected function getStudentsByRole(Request $request) {
+        $headquarters = $request->get('headquarters');
+        $pagination = $request->get('pagination');
+        $like_ = $request->get('toSearch');
+        $game_users = [];
+        $quantity = 0;
+
+        $info_hq_grade = DB::table('game_users AS gu')
+                            ->select('gu.id AS id', DB::raw("CONCAT(gu.first_name, ' ', gu.second_name, ' ', gu.first_surname, ' ', gu.second_surname) AS name"))
+                            ->whereIn('gu.headquarter_id', $headquarters)
+                            ->whereRaw("CONCAT(gu.first_name, gu.second_name, gu.first_surname, gu.second_surname) LIKE ?", ["%$like_%"])
+                            ->orderBy('gu.first_name')
+                            // ->get();
+                            ->simplePaginate($pagination);
+
+        $quantity = DB::table('game_users AS gu')
+                        ->select('gu.id')
+                        ->whereIn('gu.headquarter_id', $headquarters)
+                        ->whereRaw("CONCAT(gu.first_name, gu.second_name, gu.first_surname, gu.second_surname) LIKE ?", ["%$like_%"])
+                        ->count();
+
+        // foreach ($info_hq_grade as $key => $hq_g) {
+        //     $n1 = $hq_g->first_name ?? '';
+        //     $n2 = $hq_g->second_name ?? '';
+        //     $s1 = $hq_g->first_surname ?? '';
+        //     $s2 = $hq_g->second_surname ?? '';
+        //     $full_name = $n1.' '.$n2.' '.$s1.' '.$s2;
+        //     $game_user_to_push = (object) array('id' => $hq_g->userId, 'name' => $full_name);
+        //     array_push($game_users, $game_user_to_push);
+        // }
+        $game_users = $this->unique_array_by_id($game_users);
+
+        $toReturn = array('game_users' => $info_hq_grade, 'quantity' => $quantity);
+        return $toReturn;
+    }
+
+    protected function getGradesByRole(Request $request) {
+        $hq_grades = DB::table('grades')
+                        ->select('id', 'name')
+                        ->where('id', '<=', 9)
+                        ->get();
+
+        $toReturn = array('hq_grades' => $hq_grades);
+        return $toReturn;
     }
 
     protected function unique_array_by_id($array) {

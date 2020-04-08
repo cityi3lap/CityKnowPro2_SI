@@ -4,38 +4,72 @@ import { useRouteMatch } from 'react-router-dom'
 
 import 'chartjs-plugin-datalabels';
 
-const Graphline = forwardRef(({ jsonApi, showAllData, typeGraph , limitsForyLabels }, ref) => {
+const Graphline = forwardRef(({ jsonApi, showAllData, typeGraph, limitsForyLabels, selectedButton, maxValue }, ref) => {
   const { params } = useRouteMatch();
   const [data, setData] = useState([]);
   const [label, setLabel] = useState([]);
 
   const [yLabels, setyLabels] = useState({
-    yLabels : {
+    yLabels: {
       0: 'Bajo', 20: 'Básico', 40: 'Medio', 60: 'Alto', 80: 'Superior', 100: ''
     },
-    min : 0 ,
-    max : 100
+    min: 0,
+    max: 100
   })
 
+  // // const [opti, setopti] = useState(initialState)
+
   const [isData, setIsData] = useState(false)
+
+  // useEffect(() => {
+  //   let dataAux = []
+  //   let labelAux = []
+  //   if (jsonApi.message === undefined && jsonApi.length > 0 ) {
+  //     setIsData(true)
+  //     if (params.filterGraph != showAllData) {
+  //       jsonApi.map((item) => {
+  //         if (changeCaseFirstLetter(item.name)  == params.filterGraph) {
+  //           dataAux.push(item.average)
+  //           labelAux.push( changeCaseFirstLetter(item.name) )
+  //         }
+  //       })
+
+  //     } else {
+  //       jsonApi.map((item) => {
+  //         dataAux.push(item.average)
+  //         labelAux.push(changeCaseFirstLetter(item.name) )
+  //       })
+  //     }
+  //     setData(dataAux)
+  //     setLabel(labelAux)
+  //     // conditional for filter data and labels graph
+
+  //   } else {
+  //     setIsData(false)
+
+  //   }
+  //   if ( limitsForyLabels !=  undefined ) {
+  //       setyLabels(limitsForyLabels)
+  //   }
+  // }, [params.filterGraph, jsonApi])
 
   useEffect(() => {
     let dataAux = []
     let labelAux = []
-    if (jsonApi.message === undefined && jsonApi.length > 0 ) {
+    if (jsonApi.message === undefined && jsonApi.length > 0) {
       setIsData(true)
-      if (params.filterGraph != showAllData) {
+      if (selectedButton != showAllData) {
         jsonApi.map((item) => {
-          if (changeCaseFirstLetter(item.name)  == params.filterGraph) {
+          if (changeCaseFirstLetter(item.name) == selectedButton) {
             dataAux.push(item.average)
-            labelAux.push( changeCaseFirstLetter(item.name) )
+            labelAux.push(changeCaseFirstLetter(item.name))
           }
         })
 
       } else {
         jsonApi.map((item) => {
           dataAux.push(item.average)
-          labelAux.push(changeCaseFirstLetter(item.name) )
+          labelAux.push(changeCaseFirstLetter(item.name))
         })
       }
       setData(dataAux)
@@ -46,18 +80,18 @@ const Graphline = forwardRef(({ jsonApi, showAllData, typeGraph , limitsForyLabe
       setIsData(false)
 
     }
-    if ( limitsForyLabels !=  undefined ) {
-        setyLabels(limitsForyLabels)
+    if (limitsForyLabels != undefined) {
+      setyLabels(limitsForyLabels)
     }
-  }, [params.filterGraph, jsonApi])
+  }, [selectedButton, jsonApi])
 
 
-  function changeCaseFirstLetter( params ) {
-    if ( typeof params === 'string' ){
-        return params.charAt(0).toUpperCase() + params.slice(1)
+  function changeCaseFirstLetter(params) {
+    if (typeof params === 'string') {
+      return params.charAt(0).toUpperCase() + params.slice(1)
     }
     return null
-}
+  }
 
   //  Data used for Graph
   const dataForGraph = {
@@ -98,7 +132,39 @@ const Graphline = forwardRef(({ jsonApi, showAllData, typeGraph , limitsForyLabe
   //   0: 'Sin evidencia', 33: 'Bajo', 66: 'Medio', 100: 'Alto', 110: ''
   // }
 
-  const options = {
+  const optionWithoutYLabels = {
+    responsive: true,
+    scales: {
+      xAxes: [
+        {
+          display: true,
+          gridLines: {
+            display: false
+          },
+          labels: label,
+        },
+      ],
+      yAxes: [{
+        showAlways: true,
+        ticks: {
+          display: true,
+          min: yLabels.min,
+          max: maxValue
+        }
+      }]
+    },
+    plugins: {
+      datalabels: {
+        display: true,
+        color: '#005c63',
+        align: 'end',
+        //  offset: 'top',
+        anchor: 'end'
+      }
+    }
+  }
+
+  const optionWithLimitsYlabel = {
     responsive: true,
     scales: {
       xAxes: [
@@ -125,20 +191,20 @@ const Graphline = forwardRef(({ jsonApi, showAllData, typeGraph , limitsForyLabe
     },
     plugins: {
       datalabels: {
-         display: true,
-         color: '#005c63',
-         align: 'end',
+        display: true,
+        color: '#005c63',
+        align: 'end',
         //  offset: 'top',
-         anchor: 'end'
+        anchor: 'end'
       }
-   }
+    }
   }
 
 
   if (isData) {
     return (
       <div className="row d-flex justify-content-center m-auto" ref={ref}>
-        <Bar data={dataForGraph} legend={legend} options={options}  />
+        <Bar data={dataForGraph} legend={legend} options={limitsForyLabels != undefined ? optionWithLimitsYlabel : optionWithoutYLabels} />
       </div>
     );
   } else {

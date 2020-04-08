@@ -8,7 +8,8 @@ const GroupPage = (props) => {
     const [nameItemClicked, setnameItemClicked] = useState("")
 
     const state = {
-        infoForSelectList: props.infoForSelectList,
+        // infoForSelectList: props.infoForSelectList,
+        infoForSelectList: [],
         // Json to defined Name and router tabs
         tabsPage: [
             {
@@ -44,8 +45,6 @@ const GroupPage = (props) => {
         routeForFetchListSearch: 'https://raw.githubusercontent.com/DuvanMorenoCardona/json/master/department.json'
     }
 
-
-
     useEffect(() => {
         setGradeForInfoUser(props.infoGrade)
     }, [props.infoGrade])
@@ -62,9 +61,10 @@ const GroupPage = (props) => {
                 routeForFetchListSearch={state.routeForFetchListSearch}
                 isInput={true}
                 isData={true}
-                infoForSelectList={gradeForInfoUser}
+                infoForSelectList={state.infoForSelectList}
                 isHovering={props.isHovering}
-                getNameItemClicked={getNameItemClicked} />
+                getNameItemClicked={getNameItemClicked} 
+                headquarters_hq={props.headquarters_hq}/>
             <ContentPageGroup
                 messageSelectedView={state.messageSelectedView}
                 tabsPage={state.tabsPage}

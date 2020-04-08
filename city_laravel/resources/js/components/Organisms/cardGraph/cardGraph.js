@@ -3,22 +3,43 @@ import TabsGraph from '../../Molecules/tabsGraph'
 import GraphLine from '../graphline/graphline'
 
 import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom'
+import TittleTab from '../../Atoms/tittleTab'
 
-const CardGraph = ({ tabs, jsonApi, showAllData, typeGraph, limitsForyLabels }) => {
+const CardGraph = ({ jsonApi, showAllData, typeGraph, limitsForyLabels, titleCard }) => {
     const [tabsFilter, settabsFilter] = useState([
         { id: "General" }
     ])
 
+    const [isActivateButton, setisActivateButton] = useState("General")
+
     const [isTabsFilter, setisTabsFilter] = useState(false)
 
-
+    const [maxValue, setmaxValue] = useState(0)
 
     const { url } = useRouteMatch()
 
     useEffect(() => {
         settabsFilter([{ id: "General" }])
         getTabsFilter()
+        getMaxValue()
     }, [jsonApi])
+
+    function getMaxValue() {
+        if (Array.isArray(jsonApi) && jsonApi.length > 0) {
+
+            let jsonApiSort = jsonApi.sort(function (a, b) {
+                if (a.average < b.average) {
+                    return 1;
+                }
+                if (a.average > b.average) {
+                    return -1;
+                }
+                // a must be equal to b
+                return 0;
+            });
+            setmaxValue(parseInt(jsonApiSort.slice(0, 1)[0].average + 5))
+        }
+    }
 
 
     function getTabsFilter() {
@@ -29,6 +50,10 @@ const CardGraph = ({ tabs, jsonApi, showAllData, typeGraph, limitsForyLabels }) 
                     [...tabsFilter, { id: changeCaseFirstLetter(item.name) }]
                 ))
             )
+
+
+
+
         } else {
             setisTabsFilter(false)
         }
@@ -41,22 +66,26 @@ const CardGraph = ({ tabs, jsonApi, showAllData, typeGraph, limitsForyLabels }) 
         return null
     }
 
+    function changeActivateButton(e) {
+        setisActivateButton(e)
+    }
+
 
     return (
         <div className="container">
             <div className="row">
-                <div className="card col mb-3">
+                <div className="card col mb-3 px-4">
                     <div className="card-body justify-content-center">
                         {
-                            isTabsFilter == true &&
-                            <TabsGraph tabs={tabsFilter} />
+                            titleCard !== undefined &&
+                            <TittleTab tittle={`${titleCard}`} />
                         }
-                        <Switch>
-                            <Route path={`${url}/:filterGraph`} >
-                                <GraphLine jsonApi={jsonApi} showAllData={showAllData} typeGraph={typeGraph} limitsForyLabels={limitsForyLabels} />
-                            </Route>
-                            <Redirect from={`${url}`} to={`${url}/General`} />
-                        </Switch>
+                        {
+                            isTabsFilter == true &&
+                            <TabsGraph tabs={tabsFilter} selectedButton={isActivateButton} changeActivateButton={changeActivateButton} />
+                        }
+                        <GraphLine jsonApi={jsonApi} showAllData={showAllData} typeGraph={typeGraph} limitsForyLabels={limitsForyLabels} selectedButton={isActivateButton} maxValue={maxValue} />
+
                     </div>
                 </div>
             </div>

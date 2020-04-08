@@ -31,8 +31,8 @@ const RecomendationGroup = ({ idForFetch, nameItemClicked }) => {
 
     async function FetchSubject() {
         let subject = await fetchApi(`http://127.0.0.1:8000/recomendations/grade/${idForFetch}`)
-        console.log("TCL: FetchSubject -> subject", subject)
-        if (subject.message === undefined && Object.is(subject, subject)) {
+        if ((subject.length > 0 && Array.isArray(subject)) || (  !Array.isArray(subject)  && subject.message == undefined)) {
+            console.log("TCL: FetchSubject -> subject", subject)
 
             Object.keys(subject).map(
                 i => {
@@ -41,27 +41,42 @@ const RecomendationGroup = ({ idForFetch, nameItemClicked }) => {
                         subjects: []
                     }
                     subject[i].map(
-                        item =>
+                        item => {
+                            let auxAll_dbas = []
+
+                            item.all_dbas.map(
+                                dba => {
+                                    if (dba !== null) {
+                                        auxAll_dbas.push(dba)
+                                    }
+                                }
+                            )
                             grade.subjects.push(
                                 {
                                     name: item.subject_name,
                                     performance: item.performance,
-                                    recomendation: item.recomendation
+                                    recomendation: item.recomendation,
+                                    all_dbas: auxAll_dbas
+
                                 }
                             )
+                        }
                     )
                     setdataSubjects(dataSubjects => [...dataSubjects, grade])
                 }
             )
 
         } else {
+            console.log("TCL aqui no entro" )
+
             setdataSubjects([{
                 name: 'Sin registro de datos',
                 subjects: [
                     {
                         name: 'No se tienen datos',
                         performance: 'No se tienen datos',
-                        recomendation: 'No se tienen datos'
+                        recomendation: 'No se tienen datos',
+                        all_dbas: []
                     }
                 ]
             }])
@@ -72,7 +87,6 @@ const RecomendationGroup = ({ idForFetch, nameItemClicked }) => {
 
     async function FetchIntelligences(params) {
         let itelliences = await fetchApi(`http://127.0.0.1:8000/intelligences/grade/${idForFetch}`)
-        console.log("TCL: FetchIntelligences -> itelliences", itelliences)
         if (itelliences.message === undefined && itelliences.length > 0) {
             setdataIntelligence(itelliences)
         } else {

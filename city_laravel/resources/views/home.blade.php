@@ -9,5 +9,5 @@
 @endsection
 
 @section('content')
-    <div id="HomePage" data-username={{ Auth::user()->username }} data-name={{ Auth::user()->name }} data-id={{ Auth::user()->id }} ></div>
+    <div id="Routes" data-username={{ Auth::user()->username }} data-name={{ Auth::user()->name }} data-id={{ Auth::user()->id }} ></div>
 @endsection

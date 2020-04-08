@@ -8,10 +8,10 @@ import { fetchApi } from '../../../function/GlobalFunctions';
 import LoadingPage from '../loadingPage/loadingPage'
 
 
-const RolesPage = ({ infoForSelectList , isHovering , infoPermissions}) => {
+const RolesPage = ({ infoForSelectList, isHovering, infoPermissions }) => {
 
     const titleListSearch = 'Roles'
-    const messageSelectedView = 'Selecciona un Role'
+    const messageSelectedView = 'Selecciona un Rol '
     const placeHolder = 'Ingrese el Rol'
     const routeForFetchListSearch = 'http://127.0.0.1:8000/roles/all'
     const roleData = {
@@ -23,7 +23,7 @@ const RolesPage = ({ infoForSelectList , isHovering , infoPermissions}) => {
     const [error, setError] = useState(null);
     const [jsonPermissions, setJsonPermissions] = useState([]);
     const [jsonRoles, setjsonRoles] = useState([])
-    
+
     const [objectPermissions, setobjectPermissions] = useState()
 
     async function getAllPermissions() {
@@ -42,25 +42,19 @@ const RolesPage = ({ infoForSelectList , isHovering , infoPermissions}) => {
     }, [infoForSelectList])
 
 
-
-    function delectRole(params) {
-        
-    }
-
     useEffect(() => {
-        console.log("TCL: RolesPage -> infoPermissions", infoPermissions)
         setobjectPermissions(infoPermissions)
     }, [infoPermissions])
 
-        return (
-            <div className='contentDepartment d-flex'>
-                <ListSearch tittle={titleListSearch} placeHolder={placeHolder} routeForFetchListSearch={routeForFetchListSearch} isInput={true} isData={true} infoForSelectList={jsonRoles} isHovering={isHovering} />
-                <ContentPageRoles messageSelectedView={messageSelectedView} infoPermissions={infoPermissions} />
-                <ButtonFloatOpenModals idModal={"ModalCreateRole"} />
-                <ModalRoleCreateandEdit idModal={"ModalCreateRole"} title={'Crear Role'} textButton={'Crear Role'} urlFetch={'http://127.0.0.1:8000/createRole'} typeFetch={'POST'} roleData={roleData} groupPermissions={objectPermissions} addExtentionIdChecked={'create'} />
-            </div>
-        )
-    }
+    return (
+        <div className='contentDepartment d-flex'>
+            <ListSearch tittle={titleListSearch} placeHolder={placeHolder} routeForFetchListSearch={routeForFetchListSearch} isInput={true} isData={true} infoForSelectList={jsonRoles} isHovering={isHovering} />
+            <ContentPageRoles messageSelectedView={messageSelectedView} infoPermissions={infoPermissions} />
+            <ButtonFloatOpenModals idModal={"ModalCreateRole"} />
+            <ModalRoleCreateandEdit idModal={"ModalCreateRole"} title={'Crear Rol'} textButton={'Crear Rol'} urlFetch={'http://127.0.0.1:8000/createRole'} typeFetch={'POST'} roleData={roleData} groupPermissions={objectPermissions} addExtentionIdChecked={'create'} />
+        </div>
+    )
+}
 
 
 export default RolesPage

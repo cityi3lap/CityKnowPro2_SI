@@ -2,16 +2,22 @@ import React , { useState } from 'react'
 
 const InputSearch = (props) => {
     const [searchString , setSearchString] = useState('') 
+    const [input, setInput] = useState('');
 
     const handleChange = (e) => {
         // Sent value to parent component
-        props.onChange(e.target.value)
+        if (props.onChange) props.onChange(e.target.value)
+        setInput(e.target.value);
     }
+    const handleSearch = () => {
+        props.onSearch(input);
+    }
+
     return (
         <div className="input-group input-Search">
-            <input type="text" className="form-control inputFilter" onChange={handleChange} placeholder={props.placeHolder} ></input>
+            <input type="text" className="form-control inputFilter" onChange={handleChange} placeholder={props.placeHolder}></input>
             <div className="input-group-append">
-                <button className="btn btn-outline-secondary btn-search" type="button" id="button-addon2">
+                <button className="btn btn-outline-secondary btn-search" type="button" id="button-addon2" onClick={handleSearch}>
                     <i className="fas fa-search"></i>
                 </button>
             </div>
@@ -19,4 +25,4 @@ const InputSearch = (props) => {
     )
 }
 
-export default InputSearch  
+export default InputSearch

@@ -28,6 +28,7 @@ return array(
     'App\\Http\\Controllers\\Api\\GetGamesPlayed' => $baseDir . '/app/Http/Controllers/Api/GetGamesPlayed.php',
     'App\\Http\\Controllers\\Api\\GetInfoIntelligences' => $baseDir . '/app/Http/Controllers/Api/GetInfoIntelligences.php',
     'App\\Http\\Controllers\\Api\\GetInfoStyles' => $baseDir . '/app/Http/Controllers/Api/GetInfoStyles.php',
+    'App\\Http\\Controllers\\Api\\GetPerformances' => $baseDir . '/app/Http/Controllers/Api/GetPerformances.php',
     'App\\Http\\Controllers\\Api\\GetPlayersPlayed' => $baseDir . '/app/Http/Controllers/Api/GetPlayersPlayed.php',
     'App\\Http\\Controllers\\Api\\GetStudents' => $baseDir . '/app/Http/Controllers/Api/GetStudents.php',
     'App\\Http\\Controllers\\Api\\SaveRecords' => $baseDir . '/app/Http/Controllers/Api/SaveRecords.php',

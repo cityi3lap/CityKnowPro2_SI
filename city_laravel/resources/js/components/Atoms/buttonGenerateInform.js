@@ -11,7 +11,7 @@ import Graphline from '../Organisms/graphline/graphline';
 
 import ReactToPrint from "react-to-print";
 
-const ButtonGenerateInform = ({ idForFetch, routeFetchCompetitions, routeFetchIntelligence, routeFetchStyles, routeFetchStyleCompetitions, routeFetchIntelligenceCompetitions, limitsForyLabels, nameItemClicked, routeFetchVocational, routerFetchSubject }) => {
+const ButtonGenerateInform = ({ idForFetch, routeFetchCompetitions, routeFetchIntelligence, routeFetchStyles, routeFetchStyleCompetitions, routeFetchIntelligenceCompetitions, limitsForyLabels, nameItemClicked, routeFetchVocational, routerFetchSubject, isReportStudent }) => {
 
     const { params, url } = useRouteMatch();
     const [isLoaded, setisLoaded] = useState(true);
@@ -47,6 +47,10 @@ const ButtonGenerateInform = ({ idForFetch, routeFetchCompetitions, routeFetchIn
         setisDataIntelligences(false)
         setisDataStyles(false)
         setisLoaded(true)
+        setJsonApiIntelligence([])
+        setjsonApiVocation([])
+        setjsonApiSubject([])
+        setJsonApiStyles([])
         AllFetch();
     }, [idForFetch])
 
@@ -56,6 +60,7 @@ const ButtonGenerateInform = ({ idForFetch, routeFetchCompetitions, routeFetchIn
             // let competitions = await fetchApi(`${routeFetchCompetitions}/${idForFetch}`)
             // setJsonApiCompetitions(competitions)
             let intelligence = await fetchApi(`${routeFetchIntelligence}/${idForFetch}`)
+            // console.log("TCL: AllFetch -> intelligence", intelligence)
             // setJsonApiIntelligence(intelligence)
             getIntelligences(intelligence)
 
@@ -64,6 +69,7 @@ const ButtonGenerateInform = ({ idForFetch, routeFetchCompetitions, routeFetchIn
             }
 
             let styles = await fetchApi(`${routeFetchStyles}/${idForFetch}`)
+            // console.log("TCL: AllFetch -> styles", styles)
             getStyles(styles)
 
             if (styles.message === undefined) {
@@ -71,6 +77,7 @@ const ButtonGenerateInform = ({ idForFetch, routeFetchCompetitions, routeFetchIn
             }
 
             let subject = await fetchApi(`${routerFetchSubject}/${idForFetch}`)
+            // console.log("TCL: AllFetch -> subject", subject)
             getSubject(subject)
 
             let vocational = await fetchApi(`${routeFetchVocational}/${idForFetch}`)
@@ -92,7 +99,7 @@ const ButtonGenerateInform = ({ idForFetch, routeFetchCompetitions, routeFetchIn
     }
 
     function getVocations(vocational) {
-        console.log("TCL: getVocations -> vocational", vocational)
+        // console.log("TCL: getVocations -> vocational", vocational)
         if (vocational.message != undefined && Object.is(vocational, vocational)) {
             setjsonApiVocation([])
         } else {
@@ -111,9 +118,9 @@ const ButtonGenerateInform = ({ idForFetch, routeFetchCompetitions, routeFetchIn
     }
 
     function getSubject(subject) {
-        if (subject.message === undefined && Object.is(subject, subject)) {
-            console.log("TCL: FetchSubject -> subject", subject.length)
-
+        // console.log("TCL: getSubject -> subject", subject)
+        if ((subject.length > 0 && Array.isArray(subject)) || (!Array.isArray(subject) && subject.message == undefined)) {
+            let auxJsonApiSubject = []
             Object.keys(subject).map(
                 i => {
                     let grade = {
@@ -121,18 +128,31 @@ const ButtonGenerateInform = ({ idForFetch, routeFetchCompetitions, routeFetchIn
                         subjects: []
                     }
                     subject[i].map(
-                        item =>
+                        item => {
+                            let auxAll_dbas = []
+
+                            item.all_dbas.map(
+                                dba => {
+                                    if (dba !== null) {
+                                        auxAll_dbas.push(dba)
+                                    }
+                                }
+                            )
                             grade.subjects.push(
                                 {
                                     name: item.subject_name,
                                     performance: item.performance,
-                                    recomendation: item.recomendation
+                                    recomendation: item.recomendation,
+                                    all_dbas: auxAll_dbas
+
                                 }
                             )
+                        }
                     )
-                    setjsonApiSubject(dataSubjects => [...dataSubjects, grade])
+                    auxJsonApiSubject.push(grade)
                 }
             )
+            setjsonApiSubject(auxJsonApiSubject)
 
         } else {
             setjsonApiSubject([{
@@ -141,7 +161,8 @@ const ButtonGenerateInform = ({ idForFetch, routeFetchCompetitions, routeFetchIn
                     {
                         name: 'No se tienen datos',
                         performance: 'No se tienen datos',
-                        recomendation: 'No se tienen datos'
+                        recomendation: 'No se tienen datos',
+                        all_dbas: []
                     }
                 ]
             }])
@@ -151,8 +172,9 @@ const ButtonGenerateInform = ({ idForFetch, routeFetchCompetitions, routeFetchIn
 
 
     function getIntelligences(intelligenceCompetition) {
-        console.log("TCL: getIntelligences -> intelligenceCompetition", intelligenceCompetition)
+        // console.log("TCL: getIntelligences -> intelligenceCompetition", intelligenceCompetition)
         if (intelligenceCompetition.message === undefined) {
+
             let dataSort = intelligenceCompetition.sort(function (a, b) {
                 if (a.average < b.average) {
                     return 1;
@@ -199,6 +221,7 @@ const ButtonGenerateInform = ({ idForFetch, routeFetchCompetitions, routeFetchIn
                             <div>
                                 {isLoaded ? <div>Loading...</div> :
                                     <ReactToPrint
+                                        pageStyle=" margin-top: 5cm;  margin-bottom: 5cm; "
                                         trigger={() => <button type="button" className="btn btn-generate-inform" onClick={print}><i className="fas fa-print"></i></button>}
                                         content={() => containerRef.current}
                                     />}
@@ -210,7 +233,8 @@ const ButtonGenerateInform = ({ idForFetch, routeFetchCompetitions, routeFetchIn
                         <div className="modal-body">
                             <PdfGenerateInform
                                 ref={containerRef}
-                                jsonApiCompetitions={jsonApiCompetitions} jsonApiIntelligence={jsonApiIntelligence}
+                                jsonApiCompetitions={jsonApiCompetitions}
+                                jsonApiIntelligence={jsonApiIntelligence}
                                 jsonApiStyles={jsonApiStyles}
                                 isLoaded={isLoaded}
                                 name={nameItemClicked}

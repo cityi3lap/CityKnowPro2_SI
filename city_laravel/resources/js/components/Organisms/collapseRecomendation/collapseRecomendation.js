@@ -7,7 +7,6 @@ const CollapseRecomendation = ({ dataIntelligence, dataSubjects }) => {
 
     //  Selected three hi
     useEffect(() => {
-        console.log("TCL: CollapseRecomendation -> dataIntelligence", dataIntelligence)
         let dataSort = dataIntelligence.sort(function (a, b) {
             if (a.average < b.average) {
                 return 1;
@@ -18,7 +17,6 @@ const CollapseRecomendation = ({ dataIntelligence, dataSubjects }) => {
             // a must be equal to b
             return 0;
         });
-        console.log("TCL: CollapseRecomendation -> dataSort", dataSort.slice(0,3))
         setmaxDataIntelligences(dataSort.slice(0,3))
     }, [dataIntelligence])
 

@@ -28,10 +28,8 @@ const ContentSelectedList = (props) => {
     const routeFetchVocational = 'http://127.0.0.1:8000/vocationals/department'
     const routerFetchSubject = 'http://127.0.0.1:8000/recomendations/department'
 
-
     const routeFetchIntelligenceCompetitions = 'http://127.0.0.1:8000/competences/intelligences/department'
     const routeFetchStyleCompetitions = 'http://127.0.0.1:8000/competences/styles/department'
-    
 
     return (
         <div className="col m-0" >
@@ -70,7 +68,7 @@ const ContentSelectedList = (props) => {
                         idForFetch={params.idForFetch}
                         nameItemClicked={props.nameItemClicked} />
                 </Route>
-                <Redirect from={`${url}`} to={`${url}/inteligenciasmultiples`} />
+                <Redirect from={`${url}`} to={`${url}/resultadosporasignatura`} />
             </Switch>
             <ButtonGenerateInform
                 idForFetch={params.idForFetch}

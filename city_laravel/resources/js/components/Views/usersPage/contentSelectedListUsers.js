@@ -45,18 +45,29 @@ const ContentSelectedListUsers = ({ roles, permissions, infoLocation }) => {
     async function fetchData() {
         try {
 
-            console.log("TCL: fetchData -> params.idForFetch", params.idForFetch)
             const result = await fetchApi(`http://127.0.0.1:8000/getUser/${params.idForFetch}`)
-            console.log("TCL: fetchData -> result", result)
             // getIdPermission(result)
             // getIdRole(result)
             setJsonApi(result)
             setroleSelect(result.role_id)
-            getSlug_role(result.role_id)
+            let auxSlug = getSlug_role(result.role_id)
+
+
+            if (auxSlug == "hq_grades") {
+                let auxChecked = []
+                for (let i = 0; i < result.destiny_ids.length; i = i + 2) {
+                    let x = result.destiny_ids[i]
+                    let y = result.destiny_ids[i + 1]
+                    auxChecked.push(`${x}-${y}`)
+                }
+                setinitialLocation(auxChecked)
+                setcheckedBox(auxChecked)
+            } else {
+                setinitialLocation(result.destiny_ids)
+                setcheckedBox(result.destiny_ids)
+            }
 
             setinitialRol(result.role_id)
-
-            setcheckedBox(result.destiny_ids)
             setisLoaded(false)
 
         } catch (error) {
@@ -68,7 +79,6 @@ const ContentSelectedListUsers = ({ roles, permissions, infoLocation }) => {
 
     useEffect(() => {
         if (slug_Permission != undefined) {
-            console.log("TCL: ModalFloatButtons -> infoLocation[slug_Permission]", infoLocation[slug_Permission])
             setlocatinoUsers(infoLocation[slug_Permission])
             // setcheckedBox([])
         }
@@ -77,6 +87,7 @@ const ContentSelectedListUsers = ({ roles, permissions, infoLocation }) => {
     function getSlug_role(idRole) {
         let slug_role = roles.find(element => element.id == idRole)
         setslug_Permission(slug_role.slug_permission)
+        return slug_role.slug_permission
     }
 
     useEffect(() => {
@@ -87,6 +98,11 @@ const ContentSelectedListUsers = ({ roles, permissions, infoLocation }) => {
 
     function changeStateCancel() {
         setisCancel(!isCancel)
+    }
+
+    function cancelAction() {
+        setcheckedBox(initialLocation)
+
     }
 
     function getIdPermission(result) {
@@ -161,7 +177,6 @@ const ContentSelectedListUsers = ({ roles, permissions, infoLocation }) => {
                         onSubmit={fields => {
 
                             async function fetchPOSTDATA() {
-                                console.log("TCL: ModalFloatButtons -> field disabled={isDisabled}s", fields)
                                 try {
                                     const data = await fetchPOST(`${urlFetchUpdate}`, fields, "PUT")
                                 } catch (error) {
@@ -171,6 +186,7 @@ const ContentSelectedListUsers = ({ roles, permissions, infoLocation }) => {
 
 
                             fields.destiny_ids = [...checkedBox]
+                            setinitialLocation(fields.destiny_ids)
                             fields.role = roleSelect;
                             fetchPOSTDATA()
                             handleClickEdit()
@@ -182,12 +198,11 @@ const ContentSelectedListUsers = ({ roles, permissions, infoLocation }) => {
                             resetForm(initialValues)
                             handleClickEdit()
                             changeStateCancel()
-
+                            cancelAction()
                         }}
                         render={({ errors, status, touched }) => {
 
                             function getIdandSlug_Permission(slug_perrmissionCheck, idRadioButton) {
-                                console.log("TCL: functiongetIdandSlug_Permission -> slug_perrmissionCheck , idRadioButton", slug_perrmissionCheck, idRadioButton)
 
 
                                 setroleSelect(Number.parseInt(idRadioButton))
@@ -195,14 +210,21 @@ const ContentSelectedListUsers = ({ roles, permissions, infoLocation }) => {
                                 //     ...user,
                                 //     role: Number.parseInt(idRadioButton)
                                 // })
-                                // console.log("TCL: functiongetIdandSlug_Permission -> idRadioButton", idRadioButton)
                                 setslug_Permission(slug_perrmissionCheck)
-                                // console.log("TCL: functiongetIdandSlug_Permission -> slug_perrmissionCheck", slug_perrmissionCheck)
                             }
 
-                            function getIdChecked(idsCheckedButtons) {
+                            function getIdChecked(idsCheckedButtons, existValue) {
                                 console.log("TCL: getIdChecked -> idsCheckedButtons", idsCheckedButtons)
-                                setcheckedBox([...idsCheckedButtons])
+
+                                if (existValue) {
+                                    setcheckedBox(checkedBox => [...checkedBox, idsCheckedButtons])
+                                } else {
+                                    let auxCheckedBox = [...checkedBox]
+                                    let index = auxCheckedBox.indexOf(idsCheckedButtons)
+                                    let spliceCheckbox = auxCheckedBox.splice(index, 1)
+
+                                    setcheckedBox(auxCheckedBox)
+                                }
                             }
 
                             return (
@@ -239,9 +261,9 @@ const ContentSelectedListUsers = ({ roles, permissions, infoLocation }) => {
                                         locationUsers={locationUsers}
                                         checkedBox={checkedBox}
                                         getIdChecked={getIdChecked}
-                                        Action={"edit"}
                                         isDisabled={isDisabled}
                                         changeStateCancel={changeStateCancel}
+                                        initialValues={initialLocation}
                                         isCancel={isCancel}
                                     />
 

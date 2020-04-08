@@ -6,20 +6,19 @@ import "./navBar.css";
 const NavBarM = ({ user, permissions, setIsHoveringDeparment }) => {
     const [isHovering, setIsHovering] = useState(false)
 
-    function getPermissionToArray(urlNavBar) {
+    function getPermissionToPropPermission(namePermission) {
         // Find Permission
-        // const found = permissions.find(element => isPermission(element, urlNavBar));
-        // if (found != undefined) {
-        //     if (found.slug == urlNavBar) {
-        //         return true
-        //     }
-        // } else {
-        //     return false
-        // }
+        let permissionExist = permissions.find(element => isPermission(element, namePermission));
+
+        if (permissionExist == undefined) {
+            return false
+        } else {
+            return true
+        }
     }
 
-    function isPermission(element, urlNavBar) {
-        return element.slug === urlNavBar;
+    function isPermission(element, namePermission) {
+        return element.name === namePermission;
     }
 
     function handleMouseHover() {
@@ -57,7 +56,7 @@ const NavBarM = ({ user, permissions, setIsHoveringDeparment }) => {
                         <ul className="navbar-nav mr-auto">
                             <NavLink
                                 className="nav-link"
-                                to="/si/home"
+                                to="/home"
                                 activeClassName="activate-navbar"
 
                             >
@@ -67,101 +66,131 @@ const NavBarM = ({ user, permissions, setIsHoveringDeparment }) => {
                                 </div>
                             </NavLink>
 
-                            {/* <NavLink
-                                className="nav-link"
-                                to="/si/SubirExcel"
-                                activeClassName="activate-navbar"
 
-                            >
-                                <div className="d-flex">
-                                    <i className="fas icon fa-upload"></i>{" "}
-                                    <div>Subir xlms</div>
-                                </div>
-                            </NavLink>
-                            <NavLink
-                                className="nav-link"
-                                to="/si/Usuarios"
-                                activeClassName="activate-navbar"
+                            {
+                                getPermissionToPropPermission("Simat") &&
+                                <NavLink
+                                    className="nav-link"
+                                    to="/SubirExcel"
+                                    activeClassName="activate-navbar"
 
-                            >
-                                <div className="d-flex">
-                                    <i className="fas icon fa-user"></i>{" "}
-                                    <div>Usuarios</div>
-                                </div>
-                            </NavLink>
-                            <NavLink
-                                className="nav-link"
-                                to="/si/Roles"
-                                activeClassName="activate-navbar"
-                            >
-                                <div className="d-flex">
-                                    <i className="fas icon fa-user-tag"></i>{" "}
-                                    <div>Roles</div>
-                                </div>
-                            </NavLink> */}
+                                >
+                                    <div className="d-flex">
+                                        <i className="fas icon fa-upload"></i>{" "}
+                                        <div>Carga de Simat</div>
+                                    </div>
+                                </NavLink>
+                            }
 
-                            <NavLink
-                                className="nav-link"
-                                activeClassName="activate-navbar"
-                                to="/si/Departamentos"
-                                onClick={handleMouseHover}
-                            >
-                                <div className="d-flex">
-                                    <i className="fas icon fa-map"></i>{" "}
-                                    <div>Departamentos</div>
-                                </div>
-                            </NavLink>
+                            {
+                                getPermissionToPropPermission("Creación de usuarios") &&
+                                <NavLink
+                                    className="nav-link"
+                                    to="/Usuarios"
+                                    activeClassName="activate-navbar"
 
-                            <NavLink
-                                className="nav-link"
-                                activeClassName="activate-navbar"
-                                to="/si/Municipios"
-                                onClick={handleMouseHover}
-                            >
-                                <div className="d-flex">
-                                    <i className="fas icon fa-mountain"></i>{" "}
-                                    <div>Municipios</div>
-                                </div>
-                            </NavLink>
+                                >
+                                    <div className="d-flex">
+                                        <i className="fas icon fa-user"></i>{" "}
+                                        <div>Usuarios</div>
+                                    </div>
+                                </NavLink>
+                            }
 
-                            <NavLink className="nav-link"
-                                activeClassName="activate-navbar"
-                                to="/si/Instituciones"
-                                onClick={handleMouseHover}
-                            >
-                                <div className='d-flex'>
-                                    <i className="fas icon fa-school"></i>{" "}<div>Instituciones</div>
-                                </div>
-                            </NavLink>
+                            {
+                                getPermissionToPropPermission("Creación de roles") &&
+                                <NavLink
+                                    className="nav-link"
+                                    to="/Roles"
+                                    activeClassName="activate-navbar"
+                                >
+                                    <div className="d-flex">
+                                        <i className="fas icon fa-user-tag"></i>{" "}
+                                        <div>Roles</div>
+                                    </div>
+                                </NavLink>
+                            }
 
-                            <NavLink className="nav-link" activeClassName="activate-navbar" to="/si/Sedes"
-                                onClick={handleMouseHover}>
-                                <div className='d-flex'>
-                                    <i className="fas icon fa-graduation-cap"></i>{" "}<div>Sedes</div>
-                                </div>
-                            </NavLink>
+                            {
+                                getPermissionToPropPermission("Departamentos") &&
+                                <NavLink
+                                    className="nav-link"
+                                    activeClassName="activate-navbar"
+                                    to="/Departamentos"
+                                    onClick={handleMouseHover}
+                                >
+                                    <div className="d-flex">
+                                        <i className="fas icon fa-map"></i>{" "}
+                                        <div>Departamentos</div>
+                                    </div>
+                                </NavLink>
+                            }
 
-                            <NavLink className="nav-link" activeClassName="activate-navbar" to="/si/Grupos"
-                                onClick={handleMouseHover}>
-                                <div className='d-flex'>
-                                    <i className="fas icon fa-users"></i>{" "}<div>Grupos</div>
-                                </div>
-                            </NavLink>
+                            {
+                                getPermissionToPropPermission("Municipios") &&
+                                <NavLink
+                                    className="nav-link"
+                                    activeClassName="activate-navbar"
+                                    to="/Municipios"
+                                    onClick={handleMouseHover}
+                                >
+                                    <div className="d-flex">
+                                        <i className="fas icon fa-mountain"></i>{" "}
+                                        <div>Municipios</div>
+                                    </div>
+                                </NavLink>
+                            }
 
-                            <NavLink className="nav-link" activeClassName="activate-navbar" to="/si/Estudiantes"
-                                onClick={handleMouseHover}>
-                                <div className='d-flex'>
-                                    <i className="fas icon fa-id-badge"></i>{" "}<div>Estudiantes</div>
-                                </div>
-                            </NavLink>
+                            {
+                                getPermissionToPropPermission("Instituciones") &&
+                                <NavLink className="nav-link"
+                                    activeClassName="activate-navbar"
+                                    to="/Instituciones"
+                                    onClick={handleMouseHover}
+                                >
+                                    <div className='d-flex'>
+                                        <i className="fas icon fa-school"></i>{" "}<div>Instituciones</div>
+                                    </div>
+                                </NavLink>
+                            }
 
-                            <NavLink className="nav-link" activeClassName="activate-navbar" to="/si/Ayuda">
+                            {
+                                getPermissionToPropPermission("Sedes") &&
+                                <NavLink className="nav-link" activeClassName="activate-navbar" to="/Sedes"
+                                    onClick={handleMouseHover}>
+                                    <div className='d-flex'>
+                                        <i className="fas icon fa-graduation-cap"></i>{" "}<div>Sedes</div>
+                                    </div>
+                                </NavLink>
+                            }
+
+                            {
+                                getPermissionToPropPermission("Grupos") &&
+                                <NavLink className="nav-link" activeClassName="activate-navbar" to="/Grupos"
+                                    onClick={handleMouseHover}>
+                                    <div className='d-flex'>
+                                        <i className="fas icon fa-users"></i>{" "}<div>Grupos</div>
+                                    </div>
+                                </NavLink>
+                            }
+
+                            {
+                                getPermissionToPropPermission("Estudiantes") &&
+                                <NavLink className="nav-link" activeClassName="activate-navbar" to="/Estudiantes"
+                                    onClick={handleMouseHover}>
+                                    <div className='d-flex'>
+                                        <i className="fas icon fa-id-badge"></i>{" "}<div>Estudiantes</div>
+                                    </div>
+                                </NavLink>
+                            }
+
+                            <NavLink className="nav-link" activeClassName="activate-navbar" to="/Ayuda">
                                 <div className='d-flex'>
                                     <i className="fas icon fa-question-circle"></i>{" "}<div>FAQ</div>
                                 </div>
                             </NavLink>
 
-                            <Link className="nav-link align-text-bottom" to="#bannerformmodal" data-toggle="modal" data-target="#exampleModal" >
+                            <Link className="nav-link align-text-bottom" to="/city#bannerformmodal" data-toggle="modal" data-target="#exampleModal" >
                                 <div className='d-flex align-middle'>
                                     <div className='d-flex'>
                                         <i className="fas  icon fa-sign-out-alt"></i>{" "}<div>Cerrar sesión</div>

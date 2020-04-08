@@ -1,19 +1,37 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
-import { NavLink, useRouteMatch } from 'react-router-dom';
+import { NavLink as a, useRouteMatch } from 'react-router-dom';
 
 
-const ButtonTab = ({ id, numberTab }) => {
-    const { url, path } = useRouteMatch()
+const ButtonTab = ({ id, selectedButton, changeActivateButton }) => {
+
+    const [isActivate, setisActivate] = useState(false)
+
+
+    useEffect(() => {
+        if (id == selectedButton) {
+            setisActivate(true)
+        } else {
+            setisActivate(false)
+        }
+    }, [selectedButton])
+
+    function handleClick() {
+        changeActivateButton(id)
+    }
 
     return (
-        <NavLink id={id} className="tabs-selected hover-2"
-            activeClassName="activeTabs"
-            to={`${path}/${id}`} exact>
+        <button id={id} className={(isActivate ? ' tabs-selected activeTabs btn btn-link hover-2' : 'tabs-selected hover-2 btn btn-link')} onClick={handleClick}>
             {id}
-        </NavLink>
+        </button>
     )
 
 }
 
 export default ButtonTab;
+
+/* <NavLink id={id} className="tabs-selected hover-2"
+            activeClassName="activeTabs"
+            to={`#${id}`} exact>
+            {id}
+        </NavLink> */

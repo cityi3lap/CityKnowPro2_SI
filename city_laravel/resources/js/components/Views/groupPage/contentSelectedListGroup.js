@@ -63,7 +63,7 @@ const ContentSelectedListGroup = (props) => {
                 <Route path={`${url}/recomendaciones`}>
                     <RecomendationGroup idForFetch={`${idFetch[0]}/${idFetch[1]}`} nameItemClicked={props.nameItemClicked} />
                 </Route>
-                <Redirect from={`${url}`} to={`${url}/inteligenciasmultiples`} />
+                <Redirect from={`${url}`} to={`${url}/resultadosporasignatura`} />
             </Switch>
             <ButtonGenerateInform
                 idForFetch={`${idFetch[0]}/${idFetch[1]}`}

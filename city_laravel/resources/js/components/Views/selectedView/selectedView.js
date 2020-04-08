@@ -9,7 +9,7 @@ const SelectedView = (props) => {
                 <div className="message-selected-view">{props.text}</div>
             </div>
             <div className="col-md-3">
-                <img src="../img/know.png" className="img-fluid" alt="Responsive image">
+                <img src="/img/know.png" className="img-fluid" alt="Responsive image">
                 </img>
             </div>
         </div>
