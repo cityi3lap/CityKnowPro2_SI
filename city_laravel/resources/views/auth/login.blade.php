@@ -97,12 +97,12 @@
                 </div>
             </div>
         </div>
-      #  @php
-       #     $version = file_get_contents('http://my.content:8088/city/versionlap.txt')
-        #@endphp
-        #<span syle="position:absolute;bottom:0.25em;left:0.25em;color:white">
-        #    v {{$version}}
-        #</span>
+        @php
+            $version = file_get_contents('http://my.content:8088/city/versionlap.txt')
+        @endphp
+        <span syle="position:absolute;bottom:0.25em;left:0.25em;color:white">
+            v {{$version}}
+        </span>
 </div>
     
 </div>
