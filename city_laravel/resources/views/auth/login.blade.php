@@ -98,7 +98,7 @@
             </div>
         </div>
         @php
-            $version = file_get_contents('http://'.$_SERVER['SERVER_ADDR']':8088/city/versionlap.txt')
+            $version = file_get_contents('http://'.$_SERVER['SERVER_ADDR'].':8088/city/versionlap.txt')
         @endphp
         <span style="position:absolute;bottom:0.25em;left:0.25em;color:white">
             v {{$version}}
